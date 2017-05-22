@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mat's Superduper</title>
+        <style>
+            body {
+                background: rgba(211, 167, 255, 0.33);
+                color: rgb(45, 45, 45);
+                padding: 10px;
+                font-family: arial;
+            }
+            header {
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+            [id=all-contents] {
+                max-width: 800px;
+                margin: auto;
+            }
+    
+            /* navigation menu */
+            nav {
+                background: rgba(159, 41, 239, 0.63);
+                margin: 0 auto;
+                margin-bottom: 20px;
+                display: flex;
+                padding: 10px;
+                border-radius: 15px;
+            }
+            nav header {
+                display: flex;
+                align-items: center;
+                color: rgb(255, 255, 255);
+                flex: 1;
+            }
+            nav ul {
+                list-style-image: none;
+            }
+            nav li {
+                display: inline-block;
+                padding: 0 10px;
+            }
+            nav a {
+                text-decoration: none;
+                color: #fff;
+            }
+    
+            /* main container area beneath menu */
+            main {
+                background: rgba(159, 41, 239, 0.63);
+                display: flex;
+                color: white;
+                border-radius: 15px;
+            }
+            [class=sidebar] {
+                margin-right: 25px;
+                padding: 10px;
+            }
+            [class=sidebar] img {
+                width: 200px;
+            }
+            [class=content] {
+                flex: 1;
+                padding: 15px;
+            }
+            [class=interests] header {
+                font-size: 1.25em;
+            }
+            
+            /* MY PERSONAL ADDITIONS - 05.22.17-12:15AM */
+            #myprofile{
+                border: blueviolet;
+                border-width: medium;
+                border-style: dashed;
+                width: 290px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="all contents">
+            
+            
+            <nav>
+                <header>Matty's Superduper Web!</header>
+                <ul>
+                   <li><a href="index.html">Home</a></li>
+                   <li><a href="portfolio.html">Portfolio</a></li>
+                </ul> 
+            </nav>
+            
+            
+            <main>
+                <div class="sidebar">
+                    <img id="myprofile" src="/Mat-Profile.jpg"></img>
+            
+                </div>
+                <div class="content">
+                    <header>Matthew J. Davis</header>
+                    <p>Student of The DOM BOM</p>
+                        <section class="interests">
+                            <header>Interests</header>
+                            <ul>
+                                <li>Music Production!</li>
+                                <li>Interesting Challenges?</li>
+                                <li>Swimming in Software!</li>
+                            </ul>
+                        </section>
+                </div>
+                
+            </main>
+        </div>
+    
+    
+
+    </body>
+</html>
