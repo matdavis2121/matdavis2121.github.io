@@ -91,10 +91,16 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="portfolio.html">Portfolio</a></li>
             </ul>   
-        </nav>             
-        <main>
+        </nav>              
+        <main <main style="margin: 10px; border-radius: 10px;">
             <div class="content">
-                <h1>Portfolio</h1>
+                <h1 style="color: white;">Portfolio</h1>
+                <ul id="portfolio">
+                </ul>
+            </div>
+        </main>>
+            <div class="content">
+                <h1 style="color: white;">Portfolio</h1>
                 <ul id="portfolio">
                 </ul>
             </div>
@@ -103,3 +109,16 @@
         <script id="portfolioScript">$(document).ready(function() {$.getJSON('projects/projects.json').then(function(data) { data.projects.forEach(function(project){ $('#portfolio').append('<li><a href="projects/' + project.name + '/">' + project.title + ' : ' + project.description + '</a></li>'); }); }); });</script>
     </body>
 </html>
+
+<main style="
+    margin: 10px;
+    border-radius: 10px;
+">
+            <div class="content">
+                <h1 style="
+    color: white;
+">Portfolio</h1>
+                <ul id="portfolio">
+                </ul>
+            </div>
+        </main>
