@@ -13,7 +13,17 @@
 // Step 1 - Search ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 function search(animals,name){
+//     var animalSearch = [];
+//     for(var i = 0; i < animals.length ; i++){
+//         //name = name[0].toUpperCase() + name.slice(1).toLowerCase()
+//         if(animals[i].name.slice(0,2) === name.slice(0,2)){
+//             animalSearch.push(animals[i])
+//         } 
     
+//         console.log(animalSearch)
+//     } return animalSearch[0]
+// }
+
     for(var i = 0; i < animals.length ; i++){
         //name = name[0].toUpperCase() + name.slice(1).toLowerCase()
         if(animals[i].name === name){
