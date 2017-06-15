@@ -109,26 +109,72 @@ function isFriend(name, object){
 }
 
 //PROBLEM 25 - 061417 - 02:05PM
-
-//if myList[i].friends[0] === undefined notFriends.push(myList[i].name)
 function nonFriends(name, myList){
     var notFriends = [];
-
     for(var i = 0; i < myList.length; i++){
-        for(var j = 0; j < myList[i].friends.length;j++){
-            if(myList[i].friends)
-            
-            
-            if(name === myList[i].name){
-                continue
-            } else if(name !== myList[i].friends[j] && myList[i].friends[j] === myList[i].friends[myList[i].friends.length -1]){
-                notFriends.push(myList[i].name);
+        /* If the person we're searching has no friends AND*/
+        /* If the person who has no friends !== name then, add them to NOTFRIENDS*/
+        if(myList[i].friends[0] === undefined && name !== myList[i].name){
+            notFriends.push(myList[i].name);
+        } else {
+            for(var j = 0; j < myList[i].friends.length;j++){
+                /* If name and the person who friends we're searching match, CONTINUE*/
+                /* If name === a friend's name then break the loop */
+                if(name === myList[i].name || name === myList[i].friends[j]){
+                    break;
+                } else if(name !== myList[i].friends[j] && myList[i].friends[j] === myList[i].friends[myList[i].friends.length -1]){
+                    notFriends.push(myList[i].name);
+                } else if(name !== myList[i].friends[j]){
+                    continue;
+                }
             }
         }
-        
-    } return notFriends;
+    } return notFriends;      
+} 
+
+//PROBLEM 26 - 061417 - 0903PM
+//Issue again with needing to close .js & forgot to use FUNCTION keyword
+//Otherwise, pretty easy problem
+function updateObject(object, mKey, mValue){
+      object[mKey] = mValue;
+      return object
+} 
+
+//PROBLEM 27 - 9:45pm
+//TOUGH ONE! - NEEDED TO FIGURE OUT HOW FOR LOOPS WORK INSIDE EACH OTHER
+/* 2 FOR loops is fine but For loops with FOR IN loops is trouble*/
+function removeProperties(object, stringArray){
+    var testArray = [];
+    for(var key in object){
+        testArray.push(key)
+    }
+    for(var i = 0; i < stringArray.length; i++){
+        for(var j = 0; j < testArray.length; j++){
+            if(stringArray[i] === testArray[j]){
+                delete object[testArray[j]];
+            }
+        }
+    } return object
 }
 
-//PROBLEM 14 - 1:04AM
-//PROBLEM 14 - 1:04AM
-//PROBLEM 14 - 1:04AM
+//PROBLEM 28 - 061417 - 11:03pm
+/*SUCCESS!! - REQUIRED
+    1. new REGEX
+    2. array.indexOf as well as array.join
+    3. string.match(RegEx).length --- this equals # of occurences
+    4. array.push()
+ */
+function dedup(array){
+var newArray = [];
+var oneLongString = array.join(" ");
+    for(var i = 0 ; i < array.length; i++){
+    var re = new RegExp(array[i], "g");
+    //If length = 1 then there's only 1 occurence of the string in the string
+        if(oneLongString.match(re).length === 1){
+            newArray.push(array[i]);
+    //If more than one occurence and the i === the 1st indexOf that string then PUSH            
+        } else if(oneLongString.match(re).length > 1 && i === array.indexOf(array[i]) ){
+            newArray.push(array[i]);            
+        }
+    } return newArray;
+}
