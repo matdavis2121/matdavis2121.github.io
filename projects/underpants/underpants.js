@@ -359,7 +359,7 @@ _.unique = function(array){
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
-_.map = function(coll, func){
+/*_.map = function(coll, func){
     
     var newArr = [];
     if(Array.isArray(coll)){
@@ -376,27 +376,20 @@ _.map = function(coll, func){
       }
     } return newArr
         
-}
+}*/
 
-/*//ANSWER 2: USING _.EACH - 06/21/2017 03:55:06
+"ANSWER 2: USING _.EACH - 06/21/2017 03:55:06"
 _.map = function(coll, func){
     var newArr = [];
-    if(Array.isArray(coll)){
+
         _.each(coll, function(val, i, arr){
             if(val){
                 newArr.push(func(val, i, arr))
             }
         });
-    } else if (typeof coll === "object"){
-        _.each(coll, function(val, key, coll){
-            if(val){
-                newArr.push(func(val, key, coll))
-            }
-        })
-    } 
     return newArr
 }
-*/
+
 
 /** _.pluck()
 * Arguments:
@@ -597,17 +590,11 @@ var seedExist = true
 */
     "06/22/2017 23:16:44"
 _.extend = function(parentOb, o2){
-//IF just 2 arguments    
-    if(arguments.length === 2){
-        _.each(o2, function(v, k, o){
-            parentOb[k] = v
-        })
-//IF MORE than 2 arguments        
-    } else if(arguments.length >=2){
+
       _.each(arguments, function(obj, index, args){
-        if(index > 0){ _.each(obj, function(v, k, o) { parentOb[k] = v })}
+        if(index > 0){
+            _.each(obj, function(v, k, o) { parentOb[k] = v })}
       })
-    }
     return parentOb
 }
 
