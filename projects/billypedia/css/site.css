@@ -23,6 +23,7 @@ nav {
     margin: 0 auto;
     display: flex;
     padding: 10px;
+    border-radius: 15px;
 }
 
 nav header {
@@ -54,6 +55,8 @@ nav a {
 main {
     background: rgb(255, 255, 255);
     display: flex;
+    position: relative;
+    top: -15px;
 }
 
 [class=sidebar] {
@@ -139,7 +142,7 @@ main {
     padding-top: 20px;
     position: relative;
     left: -20px;
-    color: rgb(110, 84, 136);
+    /*color: rgb(110, 84, 136);*/
 }
 
 /*3. spacing for all list elements as a whole*/
@@ -157,7 +160,7 @@ main {
 /* GENERAL RECORDINGS ONLY*/
 /*1. COLORING: for all 2nd and 3rd divs in GENERAL RECORDINGS*/
 #list-recordings div:not(:nth-child(1)){
-    color: rgb(110, 84, 136);
+    /*color: rgb(110, 84, 136);*/
     position:relative;
     margin-bottom: 4px;
 }
@@ -181,13 +184,13 @@ main {
 
 /* NAV TITLE NAME - BILLYPEDIA*/
 #name1 {
-    font-size: 30px;
+    font-size: 40px;
     font-family: 'Pacifico', cursive;
 }
 
 #name2{
     font-family: 'Fira Sans', sans-serif;
-    font-size:22px;
+    font-size:32px;
     font-weight: 600
 }
 
@@ -202,4 +205,22 @@ main {
 #billys-rider td:first-child{
     color:  rgb(110, 84, 136);
     padding-right: 20px;
+}
+
+#sidebar, #sidebar{
+    background-Color: rgb(110, 84, 136);
+    color: white;
+}
+
+nav li {
+    position: relative;
+    left: 15px;
+}
+
+#section-quotes{
+    background-color: rgb(110, 84, 136);
+    border-radius: 15px;
+    color: white;
+    padding-left: 14px;
+    
 }
