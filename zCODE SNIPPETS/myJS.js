@@ -15,7 +15,7 @@
 
 //1. Change my intellisense background to white 
 var myIntell = document.querySelectorAll(".ace_scroller");
-myIntell[myIntell.length - 1].id = "my-intelli";
+myIntell[myIntell.length - 1].id = "my-intelli"; .
 
 a.
 //2. AutoAdjust 2 columns - 3 defaults

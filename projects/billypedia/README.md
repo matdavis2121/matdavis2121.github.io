@@ -64,7 +64,8 @@ ReferenceError: $ is not defined
 
 ### TODO 2 : Modify the Page using jQuery
 
-With the DevTools console open, we're going to run some jQuery commands to modify our page. By doing so in the console, we can get jiggy with jQuery without permanently modify the page. The changes we make in these first set of exercises will be reset if you refresh the page, so hold of on refreshing until you finish will all of the steps in **TODO 2**
+With the DevTools console open, we're going to run some jQuery commands to modify our page.
+By doing so in the console, we can get jiggy with jQuery without permanently modify the page. The changes we make in these first set of exercises will be reset if you refresh the page, so hold of on refreshing until you finish will all of the steps in **TODO 2**
 
 Making DOM queries with jQuery, we can select elements using CSS selectors. This allows us to select elements by their:
 
