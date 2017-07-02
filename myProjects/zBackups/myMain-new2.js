@@ -154,9 +154,9 @@ function autoHeadMaker(){
             var $p2aClone = $pCloner2.clone().text(p2a)
             var $p2bClone = $pCloner2.clone().text(p2b)
             var $p2cClone = $pCloner2.clone().text(p2c)
-        //b. 1st Section - SECTION BIO - appendedTo sectionsDiv
+        //b. 1st Section - SECTION PRAISE - appendedTo sectionsDiv
             var $sectionPraise = $("<section>").attr("id", "section-praise").appendTo($sectionsDiv)
-        //c. Header || All P elements being appendedTo Section Bio 
+        //c. Header || All P elements being appendedTo Section Praise
             $("<h3>").text("Praise for Billy Higgins").appendTo($sectionPraise)
             //All P elements
             $sectionPraise.append($p2aClone,$p2bClone,$p2cClone)
@@ -171,13 +171,13 @@ function autoHeadMaker(){
                     "'Little boy, what are you gonna be when you grow up?' I said, 'I'm gonna play the drums.' " +
                     "They said, 'No, no, no, no. What do you really want to be?'"
         //PARAGRAPH CLONES-3                    
-        var $pCloner3 = $("<p>").addClass("praise")
+        var $pCloner3 = $("<p>").addClass("Quotes")
             var $p3aClone = $pCloner3.clone().text(p3a)
             var $p3bClone = $pCloner3.clone().text(p3b)
             var $p3cClone = $pCloner3.clone().text(p3c)
-        //b. 1st Section - SECTION BIO - appendedTo sectionsDiv
+        //b. 1st Section - SECTION QUOTES - appendedTo sectionsDiv
             var $sectionQuotes = $("<section>").attr("id", "section-quotes").appendTo($sectionsDiv)
-        //c. Header || All P elements being appendedTo Section Bio 
+        //c. Header || All P elements being appendedTo Section Quotes 
             $("<h3>").text("Quotes by Billy Higgins").appendTo($sectionQuotes)
             //All P elements
             $sectionQuotes.append($p3aClone,$p3bClone,$p3cClone)
