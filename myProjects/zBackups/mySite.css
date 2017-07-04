@@ -1,0 +1,226 @@
+/*body {*/
+/*    background: rgba(78, 196, 61, 0.45);*/
+/*    color: rgb(45, 45, 45);*/
+/*    padding: 10px;*/
+/*    font-family: arial;*/
+/*}*/
+
+/*header {*/
+/*    font-size: 1.5em;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*[id=all-contents] {*/
+/*    max-width: 800px;*/
+/*    margin: auto;*/
+/*}*/
+
+
+/* navigation menu */
+
+/*nav {*/
+/*    background: rgb(110, 84, 136);;*/
+/*    margin: 0 auto;*/
+/*    display: flex;*/
+/*    padding: 10px;*/
+/*    border-radius: 15px;*/
+/*}*/
+
+/*nav header {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    color: rgb(255, 255, 255);*/
+/*    flex: 1;*/
+/*}*/
+
+/*nav ul {*/
+/*    -moz-padding-start: 0;*/
+/*    -webkit-padding-start: 0;*/
+/*    list-style-image: none;*/
+/*}*/
+
+/*nav li {*/
+/*    display: inline-block;*/
+/*    padding: 0 10px;*/
+/*    font-size: 1.2em;*/
+/*}*/
+
+/*nav a {*/
+/*    text-decoration: none;*/
+/*    color: #fff;*/
+/*}*/
+
+/* main container area beneath menu */
+
+/*main {*/
+/*    background: rgb(255, 255, 255);*/
+/*    display: flex;*/
+/*    position: relative;*/
+/*    top: -15px;*/
+/*}*/
+
+/*[class=sidebar] {*/
+/*    margin-right: 10px;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*[class=sidebar] img {*/
+/*    width: 200px;*/
+/*}*/
+
+/*[class=content] {*/
+/*    flex: 1;*/
+/*    padding: 4px;*/
+/*    padding-top: 0;*/
+/*    margin-right: 10px;*/
+/*}*/
+
+/*[class=discography] header {*/
+/*    font-size: 1.25em;*/
+/*}*/
+
+/*#image-billy {*/
+/*    border: 2px solid;*/
+/*    border-color: rgba(255, 255, 255, 1);*/
+/*    cursor: pointer; cursor: hand;*/
+/*    border-radius: 250px;*/
+/*}*/
+
+/* -------------1. MY CSS-----------------------*/
+/*#mylist0 > p:not(:nth-child(1)){*/
+/*    color: red;*/
+/*    position: relative;*/
+/*    top: -10px;*/
+/*    margin: 5px;*/
+/*    left: -5px;*/
+/*}*/
+
+/*#mylist1 > p:not(:nth-child(1)){*/
+/*    color: red;*/
+/*    position: relative;*/
+/*    top: -10px;*/
+/*    margin: 5px;*/
+/*    left: -5px;*/
+/*}*/
+
+/*#mylist2 > p:not(:nth-child(1)){*/
+/*    color: red;*/
+/*    position: relative;*/
+/*    top: -10px;*/
+/*    margin: 5px;*/
+/*    left: -5px;*/
+/*}*/
+
+/*#mylist3 > p:not(:nth-child(1)){*/
+/*    color: red;*/
+/*    position: relative;*/
+/*    top: -10px;*/
+/*    margin: 5px;*/
+/*    left: -5px;*/
+/*}*/
+
+/*#mylist4 > p:not(:nth-child(1)){*/
+/*    color: red;*/
+/*    position: relative;*/
+/*    top: -10px;*/
+/*    margin: 5px;*/
+/*    left: -5px;*/
+/*}*/
+
+/* TOP RATED ONLY*/
+
+/*1. COLORING: for 2nd and 3rd p in top rated list*/
+/*#list-top-rated li p:not(:nth-child(1)){
+    color: rgb(110, 84, 136);
+    position:relative;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    top: -20px;
+}*/
+/*2. spacing for all list elements as a whole*/
+/*#list-top-rated li p{*/
+/*    padding-top: 20px;*/
+/*    position: relative;*/
+/*    left: -20px;*/
+    /*color: rgb(110, 84, 136);*/
+/*}*/
+
+/*3. spacing for all list elements as a whole*/
+/*#list-top-rated li {*/
+/*    position:relative;*/
+/*    margin-top: 20px;*/
+/*    margin-bottom: -30px;*/
+/*    top: -20px;*/
+/*}*/
+
+/*#list-top-rated li p:last-child{
+    margin-top: -5px;
+}*/
+
+/* GENERAL RECORDINGS ONLY*/
+/*1. COLORING: for all 2nd and 3rd divs in GENERAL RECORDINGS*/
+/*#list-recordings div:not(:nth-child(1)){*/
+    /*color: rgb(110, 84, 136);*/
+/*    position:relative;*/
+/*    margin-bottom: 4px;*/
+/*}*/
+
+/*#list-recordings div:last-child{*/
+/*    color: rgb(110, 84, 136);*/
+/*    position:relative;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+
+/* 2. MOVING ENTIRE DIV ELEMENTS TO THE LEFT*/
+/*#list-recordings div {*/
+/*    left: -20px;*/
+/*}*/
+
+/*#list-recordings div:nth-child(1) {*/
+/*    position: relative;*/
+/*    left: -20px;*/
+/*}*/
+
+/* NAV TITLE NAME - BILLYPEDIA*/
+/*#name1 {*/
+/*    font-size: 40px;*/
+/*    font-family: 'Pacifico', cursive;*/
+/*}*/
+
+/*#name2{*/
+/*    font-family: 'Fira Sans', sans-serif;*/
+/*    font-size:32px;*/
+/*    font-weight: 600*/
+/*}*/
+
+
+/* LIST ITEM STYLE - BULLETS FOR LISTS*/
+/*#sidebar ul{*/
+/*    list-style-image: url("images/drum-kit-icon2.png");*/
+/*    list-style-type: none;*/
+/*}*/
+
+/* -----------------------TABLE CSS------------------*/
+/*#billys-rider td:first-child{*/
+/*    color:  rgb(110, 84, 136);*/
+/*    padding-right: 20px;*/
+/*}*/
+
+/*#sidebar, #sidebar{*/
+/*    background-Color: rgb(110, 84, 136);*/
+/*    color: white;*/
+/*}*/
+
+/*nav li {*/
+/*    position: relative;*/
+/*    left: 15px;*/
+/*}*/
+
+/*#section-quotes{*/
+/*    background-color: rgb(110, 84, 136);*/
+/*    border-radius: 15px;*/
+/*    color: white;*/
+/*    padding-left: 14px;*/
+    
+/*}*/

@@ -1,0 +1,52 @@
+MANTRAS: a solid program has instructions that are inclusive and accommodating to multiple scenarios while
+         delivering a consistent and accurate end result.
+
+1. HOW TO BUILD THE SEARCH AND FILTER
+
+https://matdavis2121-github-io-matdavis2121.c9users.io/projects/product-project/.notes/directions.html
+
+A. SEARCH
+    a. search by ANYTHING?
+        1. first just search the description then apply it to most text
+        2. when you search, make the highlighted text receive a span that highlights it?
+        3. when it doesn't match, remove the span
+        4. Make sure it's only keywords
+            -black, iphone, samsung, 4.7 inch
+        5. if it's not a keyword, display a div tip (please search for a keyword, ex. )
+        6. for each product turn the TYPE, DESC, COLOR, AVAILABLE COLORS, SPECS, all into 1 string
+            -Use that string word search?
+            -OR copy and past only the words we want
+
+B. FILTER
+    a. filter by 
+        1. type ( phone || case)
+        2. desc ( iphone || samsung )
+        3. price ( low > high || high > low)
+        4. availableColors - will have to filter out colors IF phone is filtered
+        **INSTEAD: of filter out, we'll allow these options to switch colors
+            1. (Black Sapphire | Gold | White | Blue Topez)
+            2. (Black Sapphire | Gold | White | Blue Topez)
+            3. (Black | Gold | White Pearl)
+            4. (Black | Gold | White | Clear | Red)
+            5. (Black| Gold Platinum| White Pearl| Emerald Green)
+            6. 
+        5. PHONE/COVER FILTER
+            1. if phone button clicked
+                a. filter to only show phones
+                b. change button style
+                    b1. animation
+                    b2. colors
+                    b3. class changes (add/remove code)
+            2. if case button clicked
+                a. filter to only show cases
+                b. change button style
+                    b1. animation
+                    b2. colors
+                    b3. class changes (add/remove code)
+            
+            3. if both clicked then what?
+                a. filters are reset
+                b. short message is animated to show reset
+                
+        
+            

@@ -1,0 +1,20 @@
+#myTable{
+    margin-top: 35px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 10px;
+}
+
+
+.apple-grid {
+    margin: 20px;
+}
+
+.row-img {
+    margin: 4px;
+}
