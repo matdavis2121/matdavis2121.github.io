@@ -1,5 +1,6 @@
 MANTRAS: a solid program has instructions that are inclusive and accommodating to multiple scenarios while
          delivering a consistent and accurate end result.
+----------------------------------------------------------
 
 1. HOW TO BUILD THE SEARCH AND FILTER
 
@@ -47,6 +48,16 @@ B. FILTER
             3. if both clicked then what?
                 a. filters are reset
                 b. short message is animated to show reset
+
+2. WORKFLOW IMPROVEMENTS
+    A. Creating new jQuery wrapped elements
+        1. assign jQuery wrapped var
+        2. TEST: reuse that var in the current section vs. typing the newly assigned id
+        3. 
+    B. Creating dynamic Functions from the start
+    C. Lessons
+        1. Don't forget to confirm the js and html files are being found (Use the console)
+        2. Any errors in the JSON file won't be reported so keep that in mind
                 
         
             
