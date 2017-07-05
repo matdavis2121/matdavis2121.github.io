@@ -1,5 +1,20 @@
 MANTRAS: a solid program has instructions that are inclusive and accommodating to multiple scenarios while
          delivering a consistent and accurate end result.
+         
+         
+         
+         
+         
+         
+TODOLIST
+1. Make search and filter work together
+2. tighten loopholes in search
+3. extend the search keywords to the other properties
+4. if all product-divs are set to none then display a div   
+    NO PRODUCTS MATCHED YOUR SEARCH, PLEASE TRY AGAIN
+5. Show the number of products that match the results
+6. When the phones are filtered, show the total amount
+7. When the cases are filtered, show the total amount
 ----------------------------------------------------------
 
 1. HOW TO BUILD THE SEARCH AND FILTER
@@ -66,5 +81,5 @@ B. FILTER
         3. images in the dropdowns???   -YES
         4. dropdowns on hover?          -YES
     B.                
-        
+
             

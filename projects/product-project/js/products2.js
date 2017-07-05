@@ -18,11 +18,9 @@ $(document).ready(function() {
 /* ----------------STEP 1 - PULLING ALL ITEMS--------------*/  
     //??Confirm that a named function is NOT allowed when using .html()
     $("main").html(function(){
-        //
+        //PullAllData function that populates the divs
         pullAllData()
     })
-  
-  
   
     ////////////////////////////////////////////////////////////
     function pullAllData(){
@@ -45,11 +43,11 @@ $(document).ready(function() {
         .append($("<p>").text(prod.availableColors))
           
         //AN ARRAY
-        .append($("<p>").text(prod.specs))
+        //.append($("<p>").text(prod.specs))
           
-        .append($("<p>").text(prod.stock))
+        .append($("<p>").text("IN-STOCK: " + prod.stock))
         //FINAL TOUCHES - hr divider || appendTo MAIN
-        .append($("<hr>"))
+        //.append($("<hr>"))
         .appendTo("main")
         
     /*F-B. ASSIGNING DATASet ATTRIBUTE*/
@@ -75,10 +73,36 @@ $(document).ready(function() {
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
    
    ///////////////////////////////////////////////////////
-   //CHANGE: Function name before final version
     function searchResults(e){
         //console.log(e.target.localName)   
         var searchText = e.target.value
+        
+        //CHECKS FOR unwantedCharacters AND DOESN'T GO ANY FURTHER
+        if(unwantedCharacters(searchText)){return}
+        
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //MAKE AN ARRAY OF UNWANTED CHARACTERS AND HAVE THEM LOOP THRU
+        function unwantedCharacters(sText){
+            if(sText === " " || sText === "," || sText === "-" ){return true} 
+            else if(sText[0] === " " && sText[1] === " "){return true}
+            else { return false}
+        }
+        
+        //CHECKS FOR searchText starting with a BLANK SPACE
+        //NEED TO: make a function that removes ALL blank spaces. 0 index should be a character
+        if(searchText[0] === " "){
+            searchText = searchText.replace(" ","")
+            //FAILED: moves the cursor BUT doesn't remove the spaces
+            // $("#searchBox")[0].selectionStart = 0
+            // $("#searchBox")[0].selectionEnd = 0
+        }
+        if(searchText[1] === " "){searchText = searchText.replace(" ","")}
+        if(searchText[2] === " "){searchText = searchText.replace(" ","")}
+
+        
+        
+
+        
         var productClass
         //REMOVE PREVIOUS SPAN
         //WOULDNT WORK PROPERLY - placing it INSIDE THE LOOP assigned the class THEN REMOVED IT OVER AND OVER
@@ -99,6 +123,20 @@ $(document).ready(function() {
         else if(searchText){
             console.log("2. THERE IS search text")
             
+            //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            //DONT USE JUST YET - JUST CREATED
+            function removeUnwantedCharacters(searchText){
+                var commas = ","
+                var dashes = "-"
+                var empty = " "
+                
+                var newString 
+                if(searchText.indexOf(commas)){newString = searchText.replace(commas, empty)}
+                return newString
+            }
+            
+            
+            
             //\\\\\\\\\\\\\\\\\
             //2A. search EACH Product Function
             allProducts.forEach(function(prod, i, arr ){
@@ -117,47 +155,25 @@ $(document).ready(function() {
                     //Show the product div
                     $(productClass).show();
                     
-           
-                        
-                    //     //DO I: need to recombine paragraph text with span text after removing span??
-                    //     //var paragrahText = this.parentElement.innerText
-                    //     //return not needed??    
-                    
-                    
-                    //2c. replaces current text with NEW SPAN
-                    highlightSearch = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
-                    spanReplacement = "<span class='highlighted-search-txt'>" + highlightSearch + "</span>"
-                    
-                    //2d. Finds the paragraph with the searchedString and highlights THAT string
-                    $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
-                        return this.innerHTML.replace(highlightSearch, spanReplacement)
-                    })
-                    $(".highlighted-search-txt").css({"padding":"4px",
-                                                    "border-radius":"15px",
-                                                    "background-color": "green", "color": "white"})
+                //2c. replaces current text with NEW SPAN
+                highlightSearch = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
+                spanReplacement = "<span class='highlighted-search-txt'>" + highlightSearch + "</span>"
+                
+                //2d. Finds the paragraph with the searchedString and highlights THAT string
+                $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
+                    return this.innerHTML.replace(highlightSearch, spanReplacement)
+                })
+                
+                
+                $(".highlighted-search-txt").css({"padding":"4px",
+                                                "border-radius":"15px",
+                                                "background-color": "green", "color": "white"})
                 }
             })
         }
             
     }
   
-  
-  
-//   /* TESTING*/
-//   var test1 = $(".product-div-1 p:contains('Samsung')").text()
-//   var searchingFor = "sung"
-//   var test1_index = test1.search(searchingFor)
-//   var test1_high = test1.slice(test1_index, test1_index + searchingFor.length)
-  
-//   var spanString = "<span class='highhigh'>" + test1_high + "</span>"
-  
-//   $(".product-div-1 p:contains('Samsung')").html(function(){
-//       return this.innerHTML.replace(test1_high, spanString)
-//   })
-  
-//   $("span.highhigh").css({"padding":"4px","border-radius":"15px","background-color": "green", "color": "white"})
-//   console.log()
-//   /* TESTING*/
   
     /*------------------- 3. FILTERS----------------*/
         /*FILTERS COMPLETED - 07/04/2017 18:57:42 */
@@ -237,11 +253,24 @@ $(document).ready(function() {
         c. My error >> $(resetFilter).insertBefore("#phone-filter")
             -resetFilter was an HTMLstring
             -#phone-filter was a selector of an element that wasn't created yet
+    3. SPAN TESTING
+        //   /* TESTING*/
+        //   var test1 = $(".product-div-1 p:contains('Samsung')").text()
+        //   var searchingFor = "sung"
+        //   var test1_index = test1.search(searchingFor)
+        //   var test1_high = test1.slice(test1_index, test1_index + searchingFor.length)
+          
+        //   var spanString = "<span class='highhigh'>" + test1_high + "</span>"
+          
+        //   $(".product-div-1 p:contains('Samsung')").html(function(){
+        //       return this.innerHTML.replace(test1_high, spanString)
+        //   })
+          
+        //   $("span.highhigh").css({"padding":"4px","border-radius":"15px","background-color": "green", "color": "white"})
+        //   console.log()
+        //   /* TESTING*/
         
         
-   */
-   
-   
    
    
    
