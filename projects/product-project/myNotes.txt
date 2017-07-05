@@ -58,6 +58,13 @@ B. FILTER
     C. Lessons
         1. Don't forget to confirm the js and html files are being found (Use the console)
         2. Any errors in the JSON file won't be reported so keep that in mind
-                
+        
+3. CSS, STYLES, FEATURES
+    A. NAV
+        1. drop down for phone types
+        2. drop down for case types     -YES
+        3. images in the dropdowns???   -YES
+        4. dropdowns on hover?          -YES
+    B.                
         
             

@@ -28,6 +28,7 @@ $(document).ready(function() {
     function pullAllData(){
     var eachProduct = []
     
+    //\\\\\\\\\\\\\\\\\
     allProducts.forEach(function(prod, i, arr ){
     /*F-e1. MAJOR MISTAKE - WAS ASSIGNING QUERIED DIV INSTEAD OF NEWLY CREATED DIV!!*/
     
@@ -71,21 +72,92 @@ $(document).ready(function() {
   
   //1. Using DOM Javascript to invoke ONINPUT change VS. SEARCH CLICK
   //2. Needed to 
-    document.getElementById("searchBox").oninput = function(event){me(event)}
+    document.getElementById("searchBox").oninput = function(event){searchResults(event)}
    
    ///////////////////////////////////////////////////////
    //CHANGE: Function name before final version
-    function me(e){
+    function searchResults(e){
         //console.log(e.target.localName)   
         var searchText = e.target.value
-        if(searchText[0].toLowerCase() === "p"){
-            $("div[data-product='case']").hide()
-        } else if(searchText[0].toLowerCase() === "c"){
-            $("div[data-product='phone']").hide()
-            
+        var productClass
+        //REMOVE PREVIOUS SPAN
+        //WOULDNT WORK PROPERLY - placing it INSIDE THE LOOP assigned the class THEN REMOVED IT OVER AND OVER
+        if($(".highlighted-search-txt") !== null) {
+            $(".highlighted-search-txt").html(function(){
+                var spanText = this.innerText
+                $(".highlighted-search-txt").replaceWith(spanText)
+            })
         }
+        
+        //When the input field is EMPTY - RESET
+        if(searchText === undefined){
+            console.log("1. no search text")
+            $("div[data-product='phone']").show()
+            $("div[data-product='case']").show()
+            
+        }    
+        else if(searchText){
+            console.log("2. THERE IS search text")
+            
+            //\\\\\\\\\\\\\\\\\
+            //2A. search EACH Product Function
+            allProducts.forEach(function(prod, i, arr ){
+                
+                //2a. searches the text string which = "DESC" property value
+                var descriptionSearch = prod.desc.toLowerCase().search(searchText.toLowerCase())
+                productClass = "." + "product-div" + "-" + (i +1)
+                //Uses the indexOf + the length of the search to slice out word from "DESC" property
+                var highlightSearch
+                var spanReplacement 
+                
+                //2b. found result or no?
+                if( descriptionSearch < 0 ){$(productClass).hide()}
+                else if( descriptionSearch > -1){
+                    console.log("3. THE search text WAS FOUND!")
+                    //Show the product div
+                    $(productClass).show();
+                    
+           
+                        
+                    //     //DO I: need to recombine paragraph text with span text after removing span??
+                    //     //var paragrahText = this.parentElement.innerText
+                    //     //return not needed??    
+                    
+                    
+                    //2c. replaces current text with NEW SPAN
+                    highlightSearch = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
+                    spanReplacement = "<span class='highlighted-search-txt'>" + highlightSearch + "</span>"
+                    
+                    //2d. Finds the paragraph with the searchedString and highlights THAT string
+                    $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
+                        return this.innerHTML.replace(highlightSearch, spanReplacement)
+                    })
+                    $(".highlighted-search-txt").css({"padding":"4px",
+                                                    "border-radius":"15px",
+                                                    "background-color": "green", "color": "white"})
+                }
+            })
+        }
+            
     }
   
+  
+  
+//   /* TESTING*/
+//   var test1 = $(".product-div-1 p:contains('Samsung')").text()
+//   var searchingFor = "sung"
+//   var test1_index = test1.search(searchingFor)
+//   var test1_high = test1.slice(test1_index, test1_index + searchingFor.length)
+  
+//   var spanString = "<span class='highhigh'>" + test1_high + "</span>"
+  
+//   $(".product-div-1 p:contains('Samsung')").html(function(){
+//       return this.innerHTML.replace(test1_high, spanString)
+//   })
+  
+//   $("span.highhigh").css({"padding":"4px","border-radius":"15px","background-color": "green", "color": "white"})
+//   console.log()
+//   /* TESTING*/
   
     /*------------------- 3. FILTERS----------------*/
         /*FILTERS COMPLETED - 07/04/2017 18:57:42 */
