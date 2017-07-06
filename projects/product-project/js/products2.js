@@ -21,6 +21,7 @@ $(document).ready(function() {
         //PullAllData function that populates the divs
         pullAllData()
     })
+ 
   
     ////////////////////////////////////////////////////////////
     function pullAllData(){
@@ -62,14 +63,14 @@ $(document).ready(function() {
   
   /*----------------------- 2. SEARCH INPUT---------------*/
   //2A. SEARCH DIV || SEARCH INPUT
-    var searchInput = "Search Products: <input id='searchBox' type='text' name='searchAll' value><br>"
+    var searchInput = "<input placeholder='Search Products...' id='searchBox' type='text' name='searchAll' value><br>"
     var searchDiv = "<div id='search-div'></div>"
   
     $("nav").after(searchDiv)
     $("#search-div").append(searchInput)
   
   //1. Using DOM Javascript to invoke ONINPUT change VS. SEARCH CLICK
-  //2. Needed to 
+  //2. Needed to perform search on value change vs. on lost focus
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
    
    ///////////////////////////////////////////////////////
@@ -107,21 +108,29 @@ $(document).ready(function() {
         //REMOVE PREVIOUS SPAN
         //WOULDNT WORK PROPERLY - placing it INSIDE THE LOOP assigned the class THEN REMOVED IT OVER AND OVER
         if($(".highlighted-search-txt") !== null) {
-            $(".highlighted-search-txt").html(function(){
-                var spanText = this.innerText
-                $(".highlighted-search-txt").replaceWith(spanText)
+            allProducts.forEach(function(p, i){
+                $(".highlighted-search-txt").html(function(){
+                    //var spanText = this.innerText
+                    //console.log(spanText)
+                    //$(".highlighted-search-txt").replaceWith("")
+                    //if($("#searchBox")[0].value  < 1 || $("#searchBox")[0].value === ""){
+                    //console.log(p.desc)
+                    //COULDN'T USE THIS BC SOME PRODUCTS DIDN'T MATCH THE SEARCH
+                    $("div p:nth-child(2)")[i].innerHTML = p.desc
+                    //}
+                })
             })
         }
         
         //When the input field is EMPTY - RESET
-        if(searchText === undefined){
-            console.log("1. no search text")
+        if(searchText === undefined || searchText === ""){
+            //console.log("1. no search text")
             $("div[data-product='phone']").show()
             $("div[data-product='case']").show()
             
         }    
         else if(searchText){
-            console.log("2. THERE IS search text")
+            //console.log("2. THERE IS search text")
             
             //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
             //DONT USE JUST YET - JUST CREATED
@@ -142,7 +151,46 @@ $(document).ready(function() {
             allProducts.forEach(function(prod, i, arr ){
                 
                 //2a. searches the text string which = "DESC" property value
+                //--SEARCHES ONLY THE PROD.DESC - make it search every match then every product, not just the 1st match?
                 var descriptionSearch = prod.desc.toLowerCase().search(searchText.toLowerCase())
+                    
+                    //////////////////////////////////////
+                    function findOtherMatches(firstMatch, nxtSearch, sText){
+                        
+                        //var secondMatch = prod.desc.toLowerCase().indexOf(searchText.toLowerCase(), firstMatch + 1)
+                        var productDesc = prod.desc.toLowerCase()
+                        var sIndex = productDesc.indexOf(sText.toLowerCase(), nxtSearch);
+                        var result
+                        var eArr = []
+                                  
+                        //we want an empty array bc an empty array will concat but with an empty value, it's blank
+                        //recursion is a different way to write a for loop
+                        //once sIndex = -1
+                        if(sIndex === -1){return eArr}
+                                  
+                        else if( sIndex > -1){
+                            eArr.push(sIndex);
+                            nxtSearch = sIndex + 1;     
+                                    
+                            return eArr.concat(findOtherMatches(firstMatch, nxtSearch, sText));
+                                
+                        }
+                    return result;
+                    }
+                    if(i > -1){
+                    var allResults = findOtherMatches(descriptionSearch, 0, searchText)
+                    }
+                    
+                    
+                    
+                    //LOOSE IF: IF for only running on the first product
+                    //Need to make this loop until all occurences of SEARCHTEXT is found
+                    // if(i === 0){
+                    // findOtherMatches(descriptionSearch)
+                    // }
+
+                    
+                
                 productClass = "." + "product-div" + "-" + (i +1)
                 //Uses the indexOf + the length of the search to slice out word from "DESC" property
                 var highlightSearch
@@ -151,25 +199,87 @@ $(document).ready(function() {
                 //2b. found result or no?
                 if( descriptionSearch < 0 ){$(productClass).hide()}
                 else if( descriptionSearch > -1){
-                    console.log("3. THE search text WAS FOUND!")
+                    //console.log("3. THE search text WAS FOUND!")
                     //Show the product div
                     $(productClass).show();
+                    //console.log("4.")
                     
-                //2c. replaces current text with NEW SPAN
-                highlightSearch = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
-                spanReplacement = "<span class='highlighted-search-txt'>" + highlightSearch + "</span>"
-                
-                //2d. Finds the paragraph with the searchedString and highlights THAT string
-                $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
-                    return this.innerHTML.replace(highlightSearch, spanReplacement)
-                })
-                
-                
-                $(".highlighted-search-txt").css({"padding":"4px",
+                    //2c. replaces current text with NEW SPAN
+                    //2c1. After this point, if original text is uppercase then it only highlights uppercase
+                    highlightSearch = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
+                    
+                    var highlightSearchLower = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
+                    if(highlightSearchLower.length > 0){highlightSearchLower = highlightSearchLower[0].toLowerCase() + highlightSearchLower.slice(1)}
+                    else(highlightSearchLower = highlightSearchLower[0].toLowerCase())
+                    
+                    //console.log("5.")
+                    
+                    /////////////////////////////////
+                    function allHighlightSearches(){
+                        var highlights
+                        var newSpanReplace
+                        //console.log("6.")
+                        //allResults.forEach(function(searchIndexes, i){
+                            //if(i === 0){
+                                highlights = prod.desc.slice(descriptionSearch, descriptionSearch + searchText.length)
+                                newSpanReplace = "<span class='highlighted-search-txt'>" + highlightSearch + "</span>"
+                                
+                                var newSpanReplaceLower = "<span class='highlighted-search-txt'>" + highlightSearchLower + "</span>"
+                                
+                                ///////////////////////////////////////////////////////////////////////////////////
+                                $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
+                                //console.log(highlightSearch,"highlightsearc")
+                                /*EXPERIMENTAL - NEEDS FURTHER TESTING --- WAS SUPPOSED TO LOOK FOR EVERY WORD*/
+                                // var newHTML = this.innerHTML.split(highlights).join(newSpanReplace).split(" ")
+                                // var pushy = [];
+                                // var highUppercased
+                                    
+                                //     if(highlights.length > 0){highUppercased = highlights[0].toUpperCase() + highlights.slice(1)}
+                                //     else(highUppercased = highlights[0].toUpperCase())
+                                //     var newSpanReplaceUpper = "<span class='highlighted-search-txt'>" + highUppercased + "</span>"
+                                    
+                                //     for(var i = 0; i < newHTML.length; i++){
+                                //         if(newHTML[i][0] === highUppercased[0]){
+                                //             pushy.push(newHTML[i].replace(highUppercased, newSpanReplaceUpper ))
+                                //         } else {pushy.push(newHTML[i])}
+                                //     }
+                                // return pushy.join(" ")
+                                var part1 = this.innerHTML.split(highlightSearch) //.join(newSpanReplace)
+                                var part2Lower
+                                var partFinal
+                                var partsArray = []
+                                    if(highlightSearch.charCodeAt(0) < 91){
+                                        part1.forEach(function(el, i, a){
+                                            if(el.search(highlightSearchLower) > -1){
+                                                part2Lower = el.split(highlightSearchLower)
+                                                part2Lower = part2Lower.join(newSpanReplaceLower)
+                                                partsArray.push(part2Lower)
+                                            }
+                                            else{partsArray.push(el)}
+                                        })
+                                    } else {partFinal = part1.join(newSpanReplace); return partFinal}
+                                partFinal = partsArray.join(newSpanReplace)
+                                //console.log(partFinal,"partfinal")
+                                return partFinal
+                                }) //ENDOF:HTML SPAN FUNCTION
+
+                                    //span length = 126
+                                    //split by the entire span???
+
+                            //}
+                        //})
+                        
+                        $(".highlighted-search-txt").css({"padding":"4px",
                                                 "border-radius":"15px",
-                                                "background-color": "green", "color": "white"})
+                                                "background-color": "green", "color": "white"})  
+                            //}
+                    }
+                    
+                    allHighlightSearches()
+                    
+
                 }
-            })
+            }) //ENDOF: EACH
         }
             
     }
@@ -195,7 +305,7 @@ $(document).ready(function() {
             if(phoneHide || caseHide) {
                 $("div[data-product='phone']").show()
                 $("div[data-product='case']").show()
-                console.log("Now showing ALL products!")
+                //console.log("Now showing ALL products!")
             }
         }                    
         
@@ -212,7 +322,7 @@ $(document).ready(function() {
             if(phoneHide){$("div[data-product='phone']").show()}
             
             $("div[data-product='case']").hide()
-            console.log("only showing phones")
+            //console.log("only showing phones")
             caseHide = true
         }
       
@@ -230,7 +340,7 @@ $(document).ready(function() {
             if(caseHide){$("div[data-product='case']").show()}
           
             $("div[data-product='phone']").hide()
-            console.log("only showing cases")
+            //console.log("only showing cases")
             phoneHide = true
         }  
       
@@ -270,6 +380,20 @@ $(document).ready(function() {
         //   console.log()
         //   /* TESTING*/
         
+        
+        
+        /* ------------------------------REMOVED CODE-----------------------*/
+            //spanReplacement = "<span class='highlighted-search-txt'>" + highlightSearch + "</span>"
+        
+            // //2d. Finds the paragraph with the searchedString and highlights THAT string
+            // $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
+            // return this.innerHTML.replace(highlightSearch, spanReplacement)
+            // }) //ENDOF: HTML ANON FUNCTION
+        
+        
+            // $(".highlighted-search-txt").css({"padding":"4px",
+            //                             "border-radius":"15px",
+            //                             "background-color": "green", "color": "white"})
         
    
    

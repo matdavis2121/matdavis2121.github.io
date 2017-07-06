@@ -7,6 +7,7 @@ MANTRAS: a solid program has instructions that are inclusive and accommodating t
          
          
 TODOLIST
+0. Make search extend to all
 1. Make search and filter work together
 2. tighten loopholes in search
 3. extend the search keywords to the other properties
@@ -14,7 +15,12 @@ TODOLIST
     NO PRODUCTS MATCHED YOUR SEARCH, PLEASE TRY AGAIN
 5. Show the number of products that match the results
 6. When the phones are filtered, show the total amount
+    -can check the datasets and the display values
+
 7. When the cases are filtered, show the total amount
+8. I need to build a function that takes a argument of the highlight searches index
+    in order to find the other matches for those searches
+9. full test out map and recursion
 ----------------------------------------------------------
 
 1. HOW TO BUILD THE SEARCH AND FILTER
