@@ -368,7 +368,7 @@ $(document).ready(function() {
         //2. MYModal div
         .append($("<div>")
         .attr({id: "myModal"})
-        .css({"width":"100%", "height":"400%", "background-color":"black", "z-index":"1", "opacity":".3", "margin": "0% auto", "position": "absolute", "left": "0%"}))
+        .css({"width":"100%", "height":"517%", "background-color":"black", "z-index":"1", "opacity":".3", "margin": "0% auto", "position": "absolute", "left": "0%"}))
         
         .prependTo("body")
         
@@ -376,36 +376,57 @@ $(document).ready(function() {
         //3.MYMODAL - img + appendTo img
         $("#modal-wrapper")
         .append($("<img>").attr({src: this.src.replace("/thumbs", ""), id: "modal-image"})
-        .css({"margin": "10% auto", "z-index":"2", "opacity":"1", "position": "absolute", "left":"40%", "width":"25%", "top":window.scrollY}))
+        .css({"margin": "10% auto", "z-index":"2", "opacity":"1", "position": "absolute",
+            "left":"40%", "width":"30%", "top":window.scrollY}))
         
-        //4. MYMODAL-img - event
+            //IMAGE SIZES FOR SMALLER IMAGES        
+            if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image")[0].style.width = "23%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-10"){$("#modal-image")[0].style.width = "45%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-11"){$("#modal-image")[0].style.width = "45%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-8"){$("#modal-image")[0].style.width = "25%"}
+        
+        //4. MYMODAL-img - CLICK EVENT
         //Had to put the event inside of the click function bc otherwise 
             //the element was not created yet
         $("#modal-image").click(function(){ 
             $("#modal-wrapper").remove()
+            
+            //GIVE VARIABLE LATER
+            window.onscroll = ""
         })
         
-        //LOOK INTO: nesting event handlers
+        //LOOK INTO: nesting event handlers -- MODAL-WRAPPER CLICK EVENT
         $("#modal-wrapper").click(function(){ 
             $("#modal-wrapper").remove()
+            window.onscroll = ""
         })
-    })  
-    
-    //4B. MODAL SCROLL EVENT
+        
+        
+            //4B. MODAL SCROLL EVENT
     window.onscroll = function(){
         //REMOVE MODAL AFTER SCROLLING DOWN PAST BOTTOM OF IMAGE
-        var clientH = $("#modal-wrapper img")[0].clientHeight
-        var modalScroll = window.outerHeight * .15 + clientH
         
-        modalScroll = modalScroll + currentScrollY
-        console.log($("#modal-wrapper img")[0].clientHeight)
+        var clientH = $("#modal-wrapper img")[0].clientHeight
+        var modalScrollBottom = window.outerHeight * .15 + clientH
+        
+        modalScrollBottom = modalScrollBottom + currentScrollY
+        var modalScrollTop = currentScrollY - clientH
+        //console.log()
         //modalScroll = modalScroll + 500
         
-        if(window.scrollY > modalScroll){
-            $("#modal-wrapper")[0].style.display = "none"; 
-            //alert("success!")}
+        if(window.scrollY > modalScrollBottom){
+            $("#modal-wrapper").remove();
+            window.onscroll = ""
+        } else if (window.scrollY < modalScrollTop){
+            $("#modal-wrapper").remove();
+            window.onscroll = ""
         }
+            //alert("success!")}
     }
+        
+    })  
+    
+
     
     
       
