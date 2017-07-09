@@ -21,6 +21,11 @@ TODOLIST
 8. I need to build a function that takes a argument of the highlight searches index
     in order to find the other matches for those searches
 9. full test out map and recursion
+
+----------------------------
+070917 to do list
+1. onresize for window?
+2.
 ----------------------------------------------------------
 
 1. HOW TO BUILD THE SEARCH AND FILTER

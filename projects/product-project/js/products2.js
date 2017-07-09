@@ -352,11 +352,11 @@ $(document).ready(function() {
     
     /*------------------- 4. ON CLICK ----------------*/  
     //LOCATE ALL IMAGES - make a click function
-    var windowInnerW = (window.innerWidth - 17);
-    var windowInnerH = (window.outerHeight - 17);
+    // var windowInnerW = (window.innerWidth - 17);
+    // var windowInnerH = (window.outerHeight - 17);
     var currentScrollY
 
-    
+    /////////////////////////////
     $("p img").click(function(e){
         currentScrollY = window.scrollY
         //alert("ON")
@@ -373,18 +373,58 @@ $(document).ready(function() {
         .prependTo("body")
         
         
-        //3.MYMODAL - img + appendTo img
+        //3a. MODAL CONTENT DIV
         $("#modal-wrapper")
-        .append($("<img>").attr({src: this.src.replace("/thumbs", ""), id: "modal-image"})
-        .css({"margin": "10% auto", "z-index":"2", "opacity":"1", "position": "absolute",
-            "left":"40%", "width":"30%", "top":window.scrollY}))
-        
+        .append($("<div>").attr({id: "modal-content-div"})
+        .css({"margin": "5% auto", "z-index":"2", "opacity":"1", "position": "absolute",
+            "left":"25%", "width":"50%", "top":window.scrollY, "background-color": "white"}))
+            
+            //3b. MODAL-IMG
+            $("<img>").attr({src: this.src.replace("/thumbs", ""), id: "modal-image"})
+            .css({"margin": "4% auto", "z-index":"2", "opacity":"1", "position": "absolute",
+                "left":"0%", "width":"100%"}).appendTo("#modal-content-div")
+            //3b. MODAL-IMG >> DIV
+            $("#modal-image").wrap($("<div>")
+            .css({"margin": "2% auto", "z-index":"2", "opacity":"1", "position": "absolute",
+                "left":"6%", "width":"25%"}))
+            
+            //3c. MODAL-CONTENT-DATA
+            var productIndex = this.parentElement.parentElement.classList[0]
+            productIndex = productIndex.slice(productIndex.lastIndexOf("-") + 1)
+            //VERY IMPORTANT ERROR: -1 NEEDED FOR 0 INDEXING
+            productIndex = productIndex - 1
+            
+            //\\\\\\\\\\\\\\\\\\\
+            function modalData(){
+                var topIncrease = 0
+                allProducts[productIndex].specs.forEach(function(e, i, a){
+                console.log(allProducts[productIndex].specs)        
+                    $("#modal-content-div")
+                        .append($("<p>").text(e).addClass("modal-image-paras")
+                        .css({position: "absolute", "padding-top": "20px", "top":topIncrease + "px", "z-index":"2",
+                            "margin-top":"15px"
+                    }))    
+                    topIncrease = topIncrease + 50
+                })
+                //PARAGRAPH DIV
+                $("#modal-content-div p").wrapAll($("<div>")
+                .css({"position":"absolute","top":"40px","left":"254px","margin-right":"15px","width":"63%",
+                    "margin-left":"45px"
+                }))
+            }
+            
+            modalData()
             //IMAGE SIZES FOR SMALLER IMAGES        
-            if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image")[0].style.width = "23%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-10"){$("#modal-image")[0].style.width = "45%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-11"){$("#modal-image")[0].style.width = "45%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-8"){$("#modal-image")[0].style.width = "25%"}
+            //if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image")[0].style.width = "23%"}
+            // if($(".product-div-10")[0].classList[0] === "product-div-10"){$("#modal-image")[0].style.width = "46%";$("#modal-image")[0].style.left = "2%"}
+            // if($(".product-div-11")[0].classList[0] === "product-div-11"){$("#modal-image")[0].style.width = "46%";$("#modal-image")[0].style.left = "2%"}
+            // if($(".product-div-8")[0].classList[0] === "product-div-8"){$("#modal-image")[0].style.width = "25%"}
+            // if($(".product-div-3")[0].classList[0] === "product-div-3"){$("#modal-image")[0].style.width = "35%"}
         
+            //3c1 >> MODAL-CONTENT-DIV HEIGHT
+            // var modContentH = $("#modal-image")[0].clientHeight + 60
+            // $("#modal-content-div")[0].style.height = modContentH + "px"
+            
         //4. MYMODAL-img - CLICK EVENT
         //Had to put the event inside of the click function bc otherwise 
             //the element was not created yet
@@ -402,8 +442,8 @@ $(document).ready(function() {
         })
         
         
-            //4B. MODAL SCROLL EVENT
-    window.onscroll = function(){
+        //4B. MODAL SCROLL EVENT
+        window.onscroll = function(){
         //REMOVE MODAL AFTER SCROLLING DOWN PAST BOTTOM OF IMAGE
         
         var clientH = $("#modal-wrapper img")[0].clientHeight
@@ -422,10 +462,15 @@ $(document).ready(function() {
             window.onscroll = ""
         }
             //alert("success!")}
-    }
+        }
         
-    })  
+        
+        var modContentH = $("#modal-content-div img").offsetHeight + 60;
+         modContentH = modContentH + "px"
+        $("#modal-content-div")[0].style.height = modContentH
+    })  //ENDOF: IMG CLICK FUNCTION
     
+
 
     
     
