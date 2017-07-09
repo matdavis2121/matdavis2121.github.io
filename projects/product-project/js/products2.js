@@ -55,6 +55,8 @@ $(document).ready(function() {
         var datasetSelector = ".product-div" + "-" +(i +1)
         $(datasetSelector).attr("data-product", prod.type)
         
+        
+        
         })
         // NOT RETURNING ANYTHING
     } //ENDOF: pullAllData
@@ -343,10 +345,69 @@ $(document).ready(function() {
             //console.log("only showing cases")
             phoneHide = true
         }  
-      
-      
-      
-      
+    //   img/product/thumbs/edge-gold.jpg
+    //   img/product/edge-gold.jpg
+    
+    
+    
+    /*------------------- 4. ON CLICK ----------------*/  
+    //LOCATE ALL IMAGES - make a click function
+    var windowInnerW = (window.innerWidth - 17);
+    var windowInnerH = (window.outerHeight - 17);
+    var currentScrollY
+
+    
+    $("p img").click(function(e){
+        currentScrollY = window.scrollY
+        //alert("ON")
+        //alert("ON")
+        
+        //1. MODAL-WRAPPER
+        $("<div>").attr({id: "modal-wrapper"})
+        .css({"width":"100%", "height":"100%", "background-color":"", "z-index":"1", "opacity":"1", "margin": "-1% auto", "position": "absolute", "left": "0%", "display": "block"})
+        //2. MYModal div
+        .append($("<div>")
+        .attr({id: "myModal"})
+        .css({"width":"100%", "height":"400%", "background-color":"black", "z-index":"1", "opacity":".3", "margin": "0% auto", "position": "absolute", "left": "0%"}))
+        
+        .prependTo("body")
+        
+        
+        //3.MYMODAL - img + appendTo img
+        $("#modal-wrapper")
+        .append($("<img>").attr({src: this.src.replace("/thumbs", ""), id: "modal-image"})
+        .css({"margin": "10% auto", "z-index":"2", "opacity":"1", "position": "absolute", "left":"40%", "width":"25%", "top":window.scrollY}))
+        
+        //4. MYMODAL-img - event
+        //Had to put the event inside of the click function bc otherwise 
+            //the element was not created yet
+        $("#modal-image").click(function(){ 
+            $("#modal-wrapper").remove()
+        })
+        
+        //LOOK INTO: nesting event handlers
+        $("#modal-wrapper").click(function(){ 
+            $("#modal-wrapper").remove()
+        })
+    })  
+    
+    //4B. MODAL SCROLL EVENT
+    window.onscroll = function(){
+        //REMOVE MODAL AFTER SCROLLING DOWN PAST BOTTOM OF IMAGE
+        var clientH = $("#modal-wrapper img")[0].clientHeight
+        var modalScroll = window.outerHeight * .15 + clientH
+        
+        modalScroll = modalScroll + currentScrollY
+        console.log($("#modal-wrapper img")[0].clientHeight)
+        //modalScroll = modalScroll + 500
+        
+        if(window.scrollY > modalScroll){
+            $("#modal-wrapper")[0].style.display = "none"; 
+            //alert("success!")}
+        }
+    }
+    
+    
       
       
       
