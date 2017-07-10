@@ -25,7 +25,7 @@ TODOLIST
 ----------------------------
 070917 to do list
 1. onresize for window?
-2.
+2. PRICE FUNCTION - LOW TO HIGH
 ----------------------------------------------------------
 
 1. HOW TO BUILD THE SEARCH AND FILTER

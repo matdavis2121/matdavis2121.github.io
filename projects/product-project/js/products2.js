@@ -66,14 +66,18 @@ $(document).ready(function() {
   /*----------------------- 2. SEARCH INPUT---------------*/
   //2A. SEARCH DIV || SEARCH INPUT
     var searchInput = "<input placeholder='Search Products...' id='searchBox' type='text' name='searchAll' value><br>"
+    var searchInput2 = "<input placeholder='Search ALL Products...' id='searchAll' type='text' name='searchAllProperties' value><br>"
     var searchDiv = "<div id='search-div'></div>"
   
     $("nav").after(searchDiv)
     $("#search-div").append(searchInput)
+    $("#search-div").append(searchInput2)
+    
   
   //1. Using DOM Javascript to invoke ONINPUT change VS. SEARCH CLICK
   //2. Needed to perform search on value change vs. on lost focus
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
+    document.getElementById("searchAll").oninput = function(event){searchAllProperties(event)}
    
    ///////////////////////////////////////////////////////
     function searchResults(e){
@@ -285,7 +289,70 @@ $(document).ready(function() {
         }
             
     }
-  
+    function searchAllProperties(e){
+        //\\\\\\\\\\\\\\\\\
+        //2A-SPECIAL. search EACH Product Function
+        allProducts.forEach(function(prod, i, arr ){
+        
+        //findAllMatches(3, prod)        
+        //findAllMatches(3, prod)
+        //findAllMatches(3, prod)
+        
+        //////////////////////////////////////
+        function findALLMatches(eachProductProperty){
+            //2a-special. searches the text string which = "DESC" property value
+            var searchAllText = $("#searchAll")[0].value
+            var nxtSearchAll = 0
+            //2b-special - GENERAL VARS
+            var descriptionSearch1
+            var descriptionSearch2
+            var descriptionSearch3
+            
+            //2c-special - product properties
+                //STRING
+                // eachProductProperty.desc
+                
+                //ARRAYS
+                // eachProductProperty.availableColors
+                // eachProductProperty.specs
+            
+            if(typeof eachProductProperty === "string"){
+                descriptionSearch1 = eachProductProperty.desc.toLowerCase().search(searchAllText.toLowerCase())
+            }
+            else if(typeof eachProductProperty === "object"){
+                descriptionSearch2 = eachProductProperty.availableColors
+                descriptionSearch3 = eachProductProperty.specs
+                
+            }
+            
+            //var secondMatch = prod.desc.toLowerCase().indexOf(searchText.toLowerCase(), firstMatch + 1)
+            //\\\\\\\\\\\\\\\\\\\\\\
+            function recursion1(){
+            var productDesc = eachProductProperty.toLowerCase()
+            var sIndex = productDesc.indexOf(searchAllText.toLowerCase(), nxtSearchAll);
+            var result
+            var eArr = []
+                      
+            //we want an empty array bc an empty array will concat but with an empty value, it's blank
+            //recursion is a different way to write a for loop
+            //once sIndex = -1
+            if(sIndex === -1){return eArr}
+                      
+            else if( sIndex > -1){
+                eArr.push(sIndex);
+                nxtSearchAll = sIndex + 1;     
+                        
+                return eArr.concat(findALLMatches(firstMatch, nxtSearch, sText));
+            }
+        return result;
+        }
+        
+        // if(i > -1){
+        // var allResults = findOtherMatches(descriptionSearch, 0, searchText)
+        // }
+}
+})
+} //ENDOF: SEARCH ALL PROPERTIES - USING RECURSION
   
     /*------------------- 3. FILTERS----------------*/
         /*FILTERS COMPLETED - 07/04/2017 18:57:42 */
@@ -364,33 +431,37 @@ $(document).ready(function() {
         
         //1. MODAL-WRAPPER
         $("<div>").attr({id: "modal-wrapper"})
-        .css({"width":"100%", "height":"100%", "background-color":"", "z-index":"1", "opacity":"1", "margin": "-1% auto", "position": "absolute", "left": "0%", "display": "block"})
+        .css({"width":"100%", "height":"100%", "background-color":"", "z-index":"1",
+            "opacity":"1", "margin": "-1% auto", "position": "absolute", "left": "0%", "display": "block"})
         //2. MYModal div
         .append($("<div>")
         .attr({id: "myModal"})
-        .css({"width":"100%", "height":"517%", "background-color":"black", "z-index":"1", "opacity":".3", "margin": "0% auto", "position": "absolute", "left": "0%"}))
+        .css({"width":"100%", "height":((window.outerHeight * 3) + "px"), "background-color":"black",
+        "z-index":"1", "opacity":".3", "margin": "0% auto", "position": "absolute", "left": "0%"}))
         
         .prependTo("body")
         
         
-        //3a. MODAL CONTENT DIV
+        //3a. MODAL CONTENT DIV - LINE 471(ONLOAD EVENT FOR HEIGHT)
         $("#modal-wrapper")
         .append($("<div>").attr({id: "modal-content-div"})
         .css({"margin": "5% auto", "z-index":"2", "opacity":"1", "position": "absolute",
-            "left":"25%", "width":"50%", "top":window.scrollY, "background-color": "white"}))
+            "left":"25%", "width":"50%","height":"600px" ,
+            "top":window.scrollY, "background-color": "white", "border-radius":"26px"}))
             
             //3b. MODAL-IMG
             $("<img>").attr({src: this.src.replace("/thumbs", ""), id: "modal-image"})
             .css({"margin": "4% auto", "z-index":"2", "opacity":"1", "position": "absolute",
                 "left":"0%", "width":"100%"}).appendTo("#modal-content-div")
             //3b. MODAL-IMG >> DIV
-            $("#modal-image").wrap($("<div>")
+            $("#modal-image").wrap($("<div>").attr("id", "modal-image-div")
             .css({"margin": "2% auto", "z-index":"2", "opacity":"1", "position": "absolute",
                 "left":"6%", "width":"25%"}))
             
             //3c. MODAL-CONTENT-DATA
             var productIndex = this.parentElement.parentElement.classList[0]
             productIndex = productIndex.slice(productIndex.lastIndexOf("-") + 1)
+            
             //VERY IMPORTANT ERROR: -1 NEEDED FOR 0 INDEXING
             productIndex = productIndex - 1
             
@@ -398,7 +469,7 @@ $(document).ready(function() {
             function modalData(){
                 var topIncrease = 0
                 allProducts[productIndex].specs.forEach(function(e, i, a){
-                console.log(allProducts[productIndex].specs)        
+                //console.log(allProducts[productIndex].specs)        
                     $("#modal-content-div")
                         .append($("<p>").text(e).addClass("modal-image-paras")
                         .css({position: "absolute", "padding-top": "20px", "top":topIncrease + "px", "z-index":"2",
@@ -408,28 +479,26 @@ $(document).ready(function() {
                 })
                 //PARAGRAPH DIV
                 $("#modal-content-div p").wrapAll($("<div>")
-                .css({"position":"absolute","top":"40px","left":"254px","margin-right":"15px","width":"63%",
+                .css({"position":"absolute","top":"40px","left":"254px","margin-right":"15px","width":"60%",
                     "margin-left":"45px"
                 }))
             }
             
             modalData()
             //IMAGE SIZES FOR SMALLER IMAGES        
-            //if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image")[0].style.width = "23%"}
-            // if($(".product-div-10")[0].classList[0] === "product-div-10"){$("#modal-image")[0].style.width = "46%";$("#modal-image")[0].style.left = "2%"}
-            // if($(".product-div-11")[0].classList[0] === "product-div-11"){$("#modal-image")[0].style.width = "46%";$("#modal-image")[0].style.left = "2%"}
-            // if($(".product-div-8")[0].classList[0] === "product-div-8"){$("#modal-image")[0].style.width = "25%"}
-            // if($(".product-div-3")[0].classList[0] === "product-div-3"){$("#modal-image")[0].style.width = "35%"}
-        
-            //3c1 >> MODAL-CONTENT-DIV HEIGHT
-            // var modContentH = $("#modal-image")[0].clientHeight + 60
-            // $("#modal-content-div")[0].style.height = modContentH + "px"
+            if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image-div")[0].style.width = "23%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-10"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-11"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-3"){$("#modal-image-div")[0].style.width = "35%";$("#modal-image-div")[0].style.left = "6%"}
+            if(this.parentElement.parentElement.classList[0] === "product-div-5"){$("#modal-image-div")[0].style.width = "30%";$("#modal-image-div")[0].style.left = "6%"}
             
+        
         //4. MYMODAL-img - CLICK EVENT
         //Had to put the event inside of the click function bc otherwise 
             //the element was not created yet
         $("#modal-image").click(function(){ 
             $("#modal-wrapper").remove()
+            //$("#modal-wrapper").css("display","none")
             
             //GIVE VARIABLE LATER
             window.onscroll = ""
@@ -438,6 +507,7 @@ $(document).ready(function() {
         //LOOK INTO: nesting event handlers -- MODAL-WRAPPER CLICK EVENT
         $("#modal-wrapper").click(function(){ 
             $("#modal-wrapper").remove()
+            //$("#modal-wrapper").css("display","none")
             window.onscroll = ""
         })
         
@@ -465,14 +535,19 @@ $(document).ready(function() {
         }
         
         
-        var modContentH = $("#modal-content-div img").offsetHeight + 60;
-         modContentH = modContentH + "px"
-        $("#modal-content-div")[0].style.height = modContentH
+        //3c1 >> MODAL-CONTENT-DIV HEIGHT
+        document.getElementById("modal-image").onload = function(){
+            //alert("function started")
+            var modContentH = $("#modal-content-div img")[0].clientHeight + 60
+            $("#modal-content-div")[0].style.height = modContentH + "px"
+            
+            $("#myModal")[0].style.top = ((window.scrollY - 350) + "px")
+            }
+    
     })  //ENDOF: IMG CLICK FUNCTION
     
-
-
-    
+        
+            
     
       
       
