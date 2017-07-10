@@ -183,6 +183,7 @@ $(document).ready(function() {
                         }
                     return result;
                     }
+                    
                     if(i > -1){
                     var allResults = findOtherMatches(descriptionSearch, 0, searchText)
                     }
@@ -292,67 +293,62 @@ $(document).ready(function() {
     function searchAllProperties(e){
         //\\\\\\\\\\\\\\\\\
         //2A-SPECIAL. search EACH Product Function
-        allProducts.forEach(function(prod, i, arr ){
+        var recArray = []
+        var i 
+        allProducts.forEach(function(prod, allPIndex, arr ){
         
-        //findAllMatches(3, prod)        
-        //findAllMatches(3, prod)
-        //findAllMatches(3, prod)
+            _.each(prod, function(property, key, obj){
+                if(allPIndex === 0){
+                    if(key === "desc" || key === "availableColors" || key === "specs")
+                    i = 0
+                    console.log(findALLMatches(property))}
+            })
+            //findAllMatches(3, prod.desc)        
+            //findAllMatches(3, prod.availableColors)
+            //findAllMatches(3, prod.specs)
         
         //////////////////////////////////////
         function findALLMatches(eachProductProperty){
             //2a-special. searches the text string which = "DESC" property value
-            var searchAllText = $("#searchAll")[0].value
-            var nxtSearchAll = 0
-            //2b-special - GENERAL VARS
-            var descriptionSearch1
-            var descriptionSearch2
-            var descriptionSearch3
+            var searchAllText = $("#searchAll")[0].value.toLowerCase()
             
-            //2c-special - product properties
-                //STRING
-                // eachProductProperty.desc
-                
-                //ARRAYS
-                // eachProductProperty.availableColors
-                // eachProductProperty.specs
+            if(eachProductProperty === undefined){}
             
-            if(typeof eachProductProperty === "string"){
-                descriptionSearch1 = eachProductProperty.desc.toLowerCase().search(searchAllText.toLowerCase())
-            }
-            else if(typeof eachProductProperty === "object"){
-                descriptionSearch2 = eachProductProperty.availableColors
-                descriptionSearch3 = eachProductProperty.specs
-                
+            else if(typeof eachProductProperty === "string"){
+                console.log("INSIDE STRING")
+                if(searchAllText === ""){}
+                else if(eachProductProperty.toLowerCase().search(searchAllText) > -1){
+                    recArray.push(allPIndex)
+                    return recArray
+                }
+            } else if(typeof eachProductProperty === "object"){
+                if(searchAllText === "" || i >= eachProductProperty.length){return recArray}
+                else if(eachProductProperty[i].toLowerCase().search(searchAllText) > -1){
+                    console.log("INSIDE ELSE IF")
+                    recArray.push(allPIndex)
+                    return recArray
+                } else {
+                    console.log("INSIDE ELSE")
+                    i +=1
+                    return findALLMatches(eachProductProperty)
+                }
             }
             
-            //var secondMatch = prod.desc.toLowerCase().indexOf(searchText.toLowerCase(), firstMatch + 1)
-            //\\\\\\\\\\\\\\\\\\\\\\
-            function recursion1(){
-            var productDesc = eachProductProperty.toLowerCase()
-            var sIndex = productDesc.indexOf(searchAllText.toLowerCase(), nxtSearchAll);
-            var result
-            var eArr = []
-                      
-            //we want an empty array bc an empty array will concat but with an empty value, it's blank
-            //recursion is a different way to write a for loop
-            //once sIndex = -1
-            if(sIndex === -1){return eArr}
-                      
-            else if( sIndex > -1){
-                eArr.push(sIndex);
-                nxtSearchAll = sIndex + 1;     
-                        
-                return eArr.concat(findALLMatches(firstMatch, nxtSearch, sText));
-            }
-        return result;
-        }
-        
-        // if(i > -1){
-        // var allResults = findOtherMatches(descriptionSearch, 0, searchText)
-        // }
-}
-})
-} //ENDOF: SEARCH ALL PROPERTIES - USING RECURSION
+        return recArray;
+
+            } //ENDOF: FIND ALL MATCHES
+        }) // ENDOF: ALLPRODUCT FOR EACH
+    } //ENDOF: SEARCH ALL PROPERTIES - USING RECURSION
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
     /*------------------- 3. FILTERS----------------*/
         /*FILTERS COMPLETED - 07/04/2017 18:57:42 */
