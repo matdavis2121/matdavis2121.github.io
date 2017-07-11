@@ -53,7 +53,9 @@ $(document).ready(function() {
         
     /*F-B. ASSIGNING DATASet ATTRIBUTE*/
         var datasetSelector = ".product-div" + "-" +(i +1)
+        var datasetIndex = ".product-div" + "-" +(i +1) 
         $(datasetSelector).attr("data-product", prod.type)
+        $(datasetSelector).attr("data-index", i)
         
         
         
@@ -461,6 +463,124 @@ $(document).ready(function() {
     
     
     
+                    "3C-LOW TO HIGH BUTTON"
+        var priceToggleFilter = "<button id='toggle-price-filter'>Price</button>"
+        $("#search-div").append(priceToggleFilter)
+        
+        //3a. ONCLICK EVENT - can I use THIS or EVENT?? || YES for BOTH
+        $("#toggle-price-filter").click(toggleClick)
+        
+        var priceCopy
+        var prices
+        //Only needed to run priceGetter ONCE
+        //////////////////////////
+        function priceGetter(){
+            var allPrices = [] 
+        
+            prices = $("main div p:nth-child(3)").text().replace(/PRICE: \$/g, " ")
+            prices = prices.split(" ").slice(1)
+            
+            priceCopy = []
+            _.each(prices, function(e,i,a){
+               priceCopy.push(prices[i] + " " + i)
+               
+               //IF no decimal, create one to place index at the very end of value
+               //if(prices[i].indexOf(".") > -1){
+               if(prices[i].indexOf(".") === -1){
+                    prices[i] = Number(prices[i] + "." + i)
+               } else if(prices[i].indexOf(".") > -1){
+                    prices[i] = Number(prices[i] + i)
+               } 
+            })
+        }
+        
+        priceGetter()
+        //\\\\\\\\\\\\\\\\\\\\\\
+        function toggleClick(){
+ 
+            
+            // //\\\\\\\\\\\\\\\\\\\\\           
+            // function toggleORNah(p){
+            //     //console.log(p,"before sort")
+            //     var priceSort = p.sort(function(a, b){return a-b})
+            //     var childTotal = $("main")[0].childElementCount
+            //     var firstPrice = $("main div:nth-child(1) p:nth-child(3)")[0].innerText.replace("PRICE: $","")
+            //     console.log(priceSort,"priceSort")
+            //     console.log(firstPrice,"firstPrice")
+                
+            //     if(priceSort.toString().length > 4){
+            //         var compare1 = priceSort[0].toString().slice(0, priceSort[0].toString().length)
+            //         console.log(compare1,"compare1")
+            //     } else if (priceSort.toString().length <= 4){
+            //         var compare1 = priceSort[0].toString()
+            //     }
+                
+            //     //IF FIRST PRICE IS THE LOWEST PRICE, REVERSE ORDER AND RETURN
+            //     if(firstPrice === compare1){
+            //         p = p.sort(function(a, b){return b-a})
+            //         console.log(p,"toggle reverse")
+            //         console.log(firstPrice)
+            //     }
+            //     //HIGHEST NUMBER HAS ADD DECIMAL POINT, NOT PRESENT IN JSON DATA - MAKE DYNAMIC
+            //     else if(firstPrice === priceSort[priceSort.length-1].toString().slice(0, priceSort[priceSort.length-1].toString().length-2)){
+            //         p = priceSort
+            //         console.log(p,"toggle normal")
+            //     }
+            //     //console.log(p)
+            //     return p
+            // }
+            
+            //prices = toggleORNah(prices)
+            var firstPrice = $("main div:nth-child(1) p:nth-child(3)")[0].innerText.replace("PRICE: $","")
+            if(firstPrice === "7.99"){
+                prices.sort(function(a, b){return b-a})
+                reOrderByPrice(prices, priceCopy)
+            } else {
+                prices.sort(function(a, b){return a-b})
+                reOrderByPrice(prices, priceCopy)
+            }
+            
+            console.log(prices,"prices")
+            console.log(priceCopy, "priceCopy")
+           
+           
+           return prices
+        }
+        //toggleClick()   
+        
+        //reOrders DIVS
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        function reOrderByPrice(p1, pcopy){
+            _.each(p1, function(each, i){
+                _.each(pcopy, function(pc1, index){
+                    //ACCOUNTS FOR 0 -Number() doesn't like 0's
+                    if(pc1.slice(-2) === " 0"){
+                        if(each.toString() === pc1.slice(0, pc1.indexOf(" "))){
+                            $(".product-div-" + (Number(pc1.slice(-1))+1)).appendTo("main")
+                        }
+                    //ACCOUNTS FOR 10 -Number() doesn't like 0's
+                    } else if (pc1.slice(-2) === "10"){
+                        if(each.toString() === pc1.slice(0, pc1.indexOf(" "))+1){
+                            $(".product-div-" + (Number(pc1.slice(-2))+1)).appendTo("main")
+                        }
+                        
+                    //DEALS WITH ALL OTHER CASES
+                    //1. If number DOESN'T have decimal
+                    } else if(pc1.indexOf(".") === -1){
+                        if(each.toString() === pc1.slice(0, pc1.indexOf(" "))+ "." +pc1.slice(pc1.indexOf(" ")+1) ){
+                            $(".product-div-" + (Number(pc1.slice(-1))+1)).appendTo("main")
+                        } 
+                    //2. If number DOES have decimal
+                    } else if(pc1.indexOf(".") > -1){
+                        if(each.toString() === pc1.slice(0, pc1.indexOf(" "))+pc1.slice(pc1.indexOf(" ")+1) ){
+                            $(".product-div-" + (Number(pc1.slice(-1))+1)).appendTo("main")
+                        }
+                    }
+                })
+            })
+        }
+                    
+                    
     /*------------------- 4. ON CLICK ----------------*/  
     //LOCATE ALL IMAGES - make a click function
     // var windowInnerW = (window.innerWidth - 17);
