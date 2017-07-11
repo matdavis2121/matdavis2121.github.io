@@ -77,7 +77,7 @@ $(document).ready(function() {
   //1. Using DOM Javascript to invoke ONINPUT change VS. SEARCH CLICK
   //2. Needed to perform search on value change vs. on lost focus
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
-    document.getElementById("searchAll").oninput = function(event){searchAllProperties(event)}
+    document.getElementById("searchAll").oninput = function(event){console.log(searchAllProperties(event))}
    
    ///////////////////////////////////////////////////////
     function searchResults(e){
@@ -294,20 +294,30 @@ $(document).ready(function() {
         //\\\\\\\\\\\\\\\\\
         //2A-SPECIAL. search EACH Product Function
         var recArray = []
-        var i 
+        var i
+        var productHits
+        
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         allProducts.forEach(function(prod, allPIndex, arr ){
         
             _.each(prod, function(property, key, obj){
-                if(allPIndex === 0){
+                if(allPIndex > -1){
                     if(key === "desc" || key === "availableColors" || key === "specs")
                     i = 0
-                    console.log(findALLMatches(property))}
+                    productHits = findALLMatches(property)
+                    //console.log(productHits)
+                }
             })
-            //findAllMatches(3, prod.desc)        
-            //findAllMatches(3, prod.availableColors)
-            //findAllMatches(3, prod.specs)
+           
+        // //2B - SPECIAL - JQUERY
+        // var mainChildren = $("main")[0].children
+        // productHits.forEach(function(v, i, a){
+            
+        //     $("main")[0].children[v].show()
+            
+        // })
         
-        //////////////////////////////////////
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         function findALLMatches(eachProductProperty){
             //2a-special. searches the text string which = "DESC" property value
             var searchAllText = $("#searchAll")[0].value.toLowerCase()
@@ -315,7 +325,7 @@ $(document).ready(function() {
             if(eachProductProperty === undefined){}
             
             else if(typeof eachProductProperty === "string"){
-                console.log("INSIDE STRING")
+//console.log("INSIDE STRING")
                 if(searchAllText === ""){}
                 else if(eachProductProperty.toLowerCase().search(searchAllText) > -1){
                     recArray.push(allPIndex)
@@ -324,20 +334,58 @@ $(document).ready(function() {
             } else if(typeof eachProductProperty === "object"){
                 if(searchAllText === "" || i >= eachProductProperty.length){return recArray}
                 else if(eachProductProperty[i].toLowerCase().search(searchAllText) > -1){
-                    console.log("INSIDE ELSE IF")
+//console.log("INSIDE ELSE IF")
                     recArray.push(allPIndex)
                     return recArray
                 } else {
-                    console.log("INSIDE ELSE")
+//console.log("INSIDE ELSE")
                     i +=1
                     return findALLMatches(eachProductProperty)
                 }
             }
             
-        return recArray;
+        return _.sortedUniq(recArray);
 
             } //ENDOF: FIND ALL MATCHES
         }) // ENDOF: ALLPRODUCT FOR EACH
+        
+        
+        console.log(productHits)
+        //Array of INDEXES of products NOT MATCHING SEARCH
+        var hideArray = filterIndexes(productHits)
+        //RESET ALL DIVS
+        $("main div").show()
+        
+        //HIDE MATCHED DIVS
+        if(hideArray !== undefined){
+            hideArray.forEach(function(e, i, a){
+                console.log(e,"value of e")
+                $(".product-div-" + (e+1)).hide()
+            }) 
+        } else { 
+            $("main div").show()
+        }
+        
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        function filterIndexes(hits){
+        var arr = [];
+        var allIndexes = [0,1,2,3,4,5,6,7,8,9,10]
+        var result  
+        
+          hits.forEach(function(e, i, a){
+            allIndexes.forEach(function(v, i2){
+              if(e === v){
+                allIndexes.splice(i2, 1)
+                result = allIndexes
+              }
+            })
+          })
+          
+          return result
+        }
+        
+        //return productHits
+        
     } //ENDOF: SEARCH ALL PROPERTIES - USING RECURSION
   
   
