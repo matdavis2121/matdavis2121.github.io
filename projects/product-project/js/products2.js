@@ -393,13 +393,6 @@ $(document).ready(function() {
   
   
   
-  
-  
-  
-  
-  
-  
-  
     /*------------------- 3. FILTERS----------------*/
         /*FILTERS COMPLETED - 07/04/2017 18:57:42 */
         //3a. GLOBAL VARS
@@ -610,7 +603,7 @@ $(document).ready(function() {
         $("#modal-wrapper")
         .append($("<div>").attr({id: "modal-content-div"})
         .css({"margin": "5% auto", "z-index":"2", "opacity":"1", "position": "absolute",
-            "left":"25%", "width":"50%","height":"600px" ,
+            "left":"25%", "width":"50%","height":"" ,
             "top":window.scrollY, "background-color": "white", "border-radius":"26px"}))
             
             //3b. MODAL-IMG
@@ -631,24 +624,48 @@ $(document).ready(function() {
             
             //\\\\\\\\\\\\\\\\\\\
             function modalData(){
-                var topIncrease = 0
-                allProducts[productIndex].specs.forEach(function(e, i, a){
-                //console.log(allProducts[productIndex].specs)        
-                    $("#modal-content-div")
-                        .append($("<p>").text(e).addClass("modal-image-paras")
-                        .css({position: "absolute", "padding-top": "20px", "top":topIncrease + "px", "z-index":"2",
-                            "margin-top":"15px"
-                    }))    
-                    topIncrease = topIncrease + 50
-                })
-                //PARAGRAPH DIV
-                $("#modal-content-div p").wrapAll($("<div>")
-                .css({"position":"absolute","top":"40px","left":"254px","margin-right":"15px","width":"60%",
-                    "margin-left":"45px"
+                var top = 0
+                
+                 //PARAGRAPH DIV
+                $("#modal-content-div").append($("<div>").attr("id","modal-paras-div")
+                .css({"position":"absolute","top":"5%","left":"30%","margin-right":"5%","width":"50%",
+                    "margin-left":"10%"
                 }))
-            }
+                
+                //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                allProducts[productIndex].specs.forEach(function(e, i, a){
+                    console.log(e)
+                    if(!e){console.log("There are no specs for this product")}
+                    
+                    $("#modal-paras-div")
+                        .append($("<p>").text(e).addClass("modal-image-paras")
+                        .css({position: "absolute", "top": top + "px"/*topIncrease + "px"*/, "z-index":"2",
+                            "margin-top":"5px"
+                    }))    
+                    top = top + 30
+                    console.log(top,"top")
+                })
+                
+                //\\\\\\\\\\\\\\\\\\\\\
+/*                function topIncreaser(top){
+                    var newTop
+                    
+                    if(top === 0){return 0}
+                    else if(top > 0){
+                        //USED . -class operator instead of # operator
+                        var syntax = "#modal-paras-div p:nth-child(000)".replace("000", top)
+                        if($(syntax)[0] === undefined){console.log("syntax variable undefined","topIncrease STOPPED!"); return }
+                        else{var previousTop = $(syntax)[0].clientHeight}
+                        console.log(previousTop,"previousTop")
+                        newTop = previousTop + 20
+                    }
+                        console.log(newTop,previousTop,"newTop+PREVIOUS")
+                    return newTop
+                }//ENDOF: topIncreaser*/
+                
+            } //ENDOF: Modal Data
             
-            modalData()
+            
             //IMAGE SIZES FOR SMALLER IMAGES        
             if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image-div")[0].style.width = "23%"}
             if(this.parentElement.parentElement.classList[0] === "product-div-10"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
@@ -707,6 +724,18 @@ $(document).ready(function() {
             
             $("#myModal")[0].style.top = ((window.scrollY - 350) + "px")
             }
+            
+            //Adds spec data from JSON as paragraphs to pop up MODAL
+            modalData()
+            
+        //3c2 >> WINDOW RESIZE
+            window.onresize = function(){
+                var modContentH = $("#modal-content-div img")[0].clientHeight + 60
+                $("#modal-content-div")[0].style.height = modContentH + "px"
+                
+                //reruns to resize
+                //modalData()
+            }            
     
     })  //ENDOF: IMG CLICK FUNCTION
     
