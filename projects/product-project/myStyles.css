@@ -77,11 +77,22 @@ nav {
 }
 
 .my-buttons{
-   border-radius: 15px; 
-   margin-right: 25px;
-   padding: 10px 25px;
-   
+    border-radius: 15px;
+    margin-right: 25px;
+    padding: 10px 25px;
+    color: white;
+    background-color: rgba(234, 198, 0, 0);
 }
+
+.my-buttons:hover{
+    border-radius: 15px;
+    margin-right: 25px;
+    padding: 10px 25px;
+    color: white;
+    background-color: dodgerblue;
+}
+
+/*main div {margin-top: 15px}*/
 /*
 
 font-family: 'Francois One', sans-serif;

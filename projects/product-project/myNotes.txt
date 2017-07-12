@@ -35,6 +35,9 @@ TODOLIST
 5. header div is fixed, DISPLAY NONE when at a certain point
 6. enforce min width and extend height of div on window.resize
 7. STILL need to use reduce
+    -Use reduce on add cart function
+    -Use reduce to turn an array into a string of its elements
+8. Make div for header, search, and filters?
 
 
 

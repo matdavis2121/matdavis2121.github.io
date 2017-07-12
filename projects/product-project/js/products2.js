@@ -485,15 +485,42 @@ $(document).ready(function() {
             phoneHide = true
             
             //CSS - ONLY FOR 1ST PRODUCT - MARGIN
-            $("main div:nth-child(1)").css("margin-top","195px")
+            //BUILDING FUNCTION TO FIND 1ST P THAT IS SET TO DISPLAY BLOCK FOR FILTER BUTTONS AND PRICE?
+            firstProductMargin()
+            
+
         }  
     //   img/product/thumbs/edge-gold.jpg
     //   img/product/edge-gold.jpg
     
+            //\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            function firstProductMargin(){
+                var eachDiv = $("main")[0].childNodes
+                var stopOnFirst = false
+                //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                eachDiv.forEach(function(e,i,a){
+                    if(i !== 0){
+                        var divMargin = e.style.marginTop
+                        var divDisplay = e.style.display
+                        var pDataset =  e.dataset.product
+                    }
+                    
+                    if(i === 0 || stopOnFirst){}
+                    else if(pDataset === "case" && divDisplay !== "none" ){
+                        e.dataset.firstChild = true
+                        
+                        $("main")[0].childNodes[i].style.marginTop = "195px"
+                        stopOnFirst = true
+                        console.log("ELSE IF DONE", "index = " + i, "e class = "+ e.className)
+                    }
+                        
+                })
+            } //ENDOF firstProductMargin
+    
     
     
                     "3C-LOW TO HIGH TOGGLE BUTTON"
-        var priceToggleFilter = "<button id='toggle-price-filter' class='my-buttons'>Price</button>"
+        var priceToggleFilter = "<button id='toggle-price-filter' class='my-buttons'>PRICE</button>"
         $("nav #search-div").append(priceToggleFilter)
         
         //3a. ONCLICK EVENT - can I use THIS or EVENT?? || YES for BOTH
