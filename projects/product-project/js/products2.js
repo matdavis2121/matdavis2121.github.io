@@ -315,8 +315,10 @@ $(document).ready(function() {
  
     } //ENDOF SEARCHRESULTS
     
-           //CSS - ONLY FOR 1ST PRODUCT - MARGIN
-        $("main div:nth-child(1)").css("margin-top","195px")
+        /*
+        IS THIS NECESSARY?? -ALREADY ABOVE - 071217 - 0404PM
+        //CSS - ONLY FOR 1ST PRODUCT - MARGIN
+        $("main div:nth-child(1)").css("margin-top","195px")*/
 
 /*----------------------- 2. SEARCH INPUT -- USES RECURSION TO SEARCH THRU MAIN 3 PRODUCT PROPERTIES(DESC, AVAILABLE, SPECS)---------------*/
     function searchAllProperties(e){
@@ -443,7 +445,8 @@ $(document).ready(function() {
                 //console.log("Now showing ALL products!")
                 
                 //CSS - ONLY FOR 1ST PRODUCT - MARGIN
-                $("main div:nth-child(1)").css("margin-top","195px")
+                //SET to PHONE ONLY bc the default sort is the JSON order, NOT BY PRICE OR TYPE
+                firstProductMargin("phone")
             }
         }                    
         
@@ -464,7 +467,7 @@ $(document).ready(function() {
             caseHide = true
             
             //CSS - ONLY FOR 1ST PRODUCT - MARGIN
-            $("main div:nth-child(1)").css("margin-top","195px")
+            firstProductMargin("phone")
         }
       
     
@@ -485,8 +488,7 @@ $(document).ready(function() {
             phoneHide = true
             
             //CSS - ONLY FOR 1ST PRODUCT - MARGIN
-            //BUILDING FUNCTION TO FIND 1ST P THAT IS SET TO DISPLAY BLOCK FOR FILTER BUTTONS AND PRICE?
-            firstProductMargin()
+            firstProductMargin("case")
             
 
         }  
@@ -494,24 +496,28 @@ $(document).ready(function() {
     //   img/product/edge-gold.jpg
     
             //\\\\\\\\\\\\\\\\\\\\\\\\\\\
-            function firstProductMargin(){
+            function firstProductMargin(datasetString){
                 var eachDiv = $("main")[0].childNodes
-                var stopOnFirst = false
+                var stopAfterFirst = false
                 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
                 eachDiv.forEach(function(e,i,a){
                     if(i !== 0){
+                        //BIG ERROR: these vars evaluate to STRINGS, can no longer access element?
                         var divMargin = e.style.marginTop
                         var divDisplay = e.style.display
                         var pDataset =  e.dataset.product
+                        e.dataset.firstProduct = false
                     }
                     
-                    if(i === 0 || stopOnFirst){}
-                    else if(pDataset === "case" && divDisplay !== "none" ){
-                        e.dataset.firstChild = true
+                    if(divMargin === "195px"){$("main")[0].childNodes[i].style.marginTop = "15px"}
+                    
+                    if(i === 0 || stopAfterFirst){/*DO NOTHING*/}
+                    else if(pDataset === datasetString && divDisplay !== "none" ){
+                        //CREATED to easily find first child
+                        e.dataset.firstProduct = true
                         
                         $("main")[0].childNodes[i].style.marginTop = "195px"
-                        stopOnFirst = true
-                        console.log("ELSE IF DONE", "index = " + i, "e class = "+ e.className)
+                        stopAfterFirst = true
                     }
                         
                 })
@@ -561,10 +567,18 @@ $(document).ready(function() {
             if(firstPrice === "7.99"){
                 prices.sort(function(a, b){return b-a})
                 reOrderByPrice(prices, priceCopy)
+                
+                //USING PHONE: bc the cheapest product is a phone
+                firstProductMargin("phone")
             } else {
                 prices.sort(function(a, b){return a-b})
                 reOrderByPrice(prices, priceCopy)
+                
+                //USING CASE: bc the cheapest product is a case
+                firstProductMargin("case")
             }
+            
+            
             
             //console.log(prices,"prices")
             //console.log(priceCopy, "priceCopy")
