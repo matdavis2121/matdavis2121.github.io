@@ -81,7 +81,7 @@ nav {
     margin-right: 25px;
     padding: 10px 25px;
     color: white;
-    background-color: rgba(234, 198, 0, 0);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .my-buttons:hover{
@@ -90,6 +90,16 @@ nav {
     padding: 10px 25px;
     color: white;
     background-color: dodgerblue;
+}
+
+.my-buttons:focus{
+    outline: none;
+    
+}
+
+.modal-para-xsmall{
+    font-size: x-small;
+    font-style: italic;
 }
 
 /*main div {margin-top: 15px}*/

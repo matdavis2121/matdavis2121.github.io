@@ -39,6 +39,11 @@ TODOLIST
     -Use reduce to turn an array into a string of its elements
 8. Make div for header, search, and filters?
 
+071217 - TO DO - LAST 2
+1. INCLUDE REDUCE
+2. ADJUST ALL IMG MODAL CONTENT PARA SPACING
+3. PRODUCT WITH EMPTY SPECS
+4. Add check input to activate RECURSIVE, NON HIGHLIGHTING SEARCH
 
 
 1. HOW TO BUILD THE SEARCH AND FILTER

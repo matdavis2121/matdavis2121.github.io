@@ -27,6 +27,14 @@ $(document).ready(function() {
     function pullAllData(){
     var eachProduct = []
     
+    //\\\\\\\\\\\\\\\
+    function availableColorsReduce(colors){
+        var allColors = colors
+        return allColors.reduce(function(pre,color,i){
+            return pre + color + ", "
+        }, " ")
+    }
+    
     //\\\\\\\\\\\\\\\\\
     allProducts.forEach(function(prod, i, arr ){
     /*F-e1. MAJOR MISTAKE - WAS ASSIGNING QUERIED DIV INSTEAD OF NEWLY CREATED DIV!!*/
@@ -50,7 +58,7 @@ $(document).ready(function() {
           
         //AN ARRAY
         .append($("<p>").css({"position":"absolute","top":"80px","left":"205px", "font-size":"medium","color":"black"})
-            .text(prod.availableColors))
+            .text(availableColorsReduce(prod.availableColors)))
           
         //AN ARRAY
         //.append($("<p>").text(prod.specs))
@@ -79,6 +87,7 @@ $(document).ready(function() {
         $("main div:nth-child(1)").css("margin-top","195px")
         
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //1. SPACING FOR PRODUCT DIVS
         function productDetailSpacing(select){
             if($(select)[0].children[1].clientHeight === 50){
                 
@@ -310,6 +319,13 @@ $(document).ready(function() {
                     allHighlightSearches()
                 }
             }) //ENDOF: ALL PRODUCTS FOR EACH
+                
+                //ALSO USED IN FILTER BUTTON RESET - DECIDES WHAT STRING TO USE BASED ON 1ST PRODUCT
+                if($("main div:nth-child(1)")[0].dataset.product === "phone"){
+                    firstProductMargin("phone")
+                } else if ($("main div:nth-child(1)")[0].dataset.product === "case"){
+                    firstProductMargin("case")
+                }
         }
         
  
@@ -446,7 +462,13 @@ $(document).ready(function() {
                 
                 //CSS - ONLY FOR 1ST PRODUCT - MARGIN
                 //SET to PHONE ONLY bc the default sort is the JSON order, NOT BY PRICE OR TYPE
-                firstProductMargin("phone")
+                if($("main div:nth-child(1)")[0].dataset.product === "phone"){
+                    firstProductMargin("phone")
+                } else if ($("main div:nth-child(1)")[0].dataset.product === "case"){
+                    firstProductMargin("case")
+                }
+                //SCROLL TO TOP ON CLICK
+                window.scrollTo(0,0)
             }
         }                    
         
@@ -468,6 +490,8 @@ $(document).ready(function() {
             
             //CSS - ONLY FOR 1ST PRODUCT - MARGIN
             firstProductMargin("phone")
+            //SCROLL TO TOP ON CLICK
+            window.scrollTo(0,0)
         }
       
     
@@ -489,6 +513,8 @@ $(document).ready(function() {
             
             //CSS - ONLY FOR 1ST PRODUCT - MARGIN
             firstProductMargin("case")
+            //SCROLL TO TOP ON CLICK
+            window.scrollTo(0,0)
             
 
         }  
@@ -576,6 +602,8 @@ $(document).ready(function() {
                 
                 //USING CASE: bc the cheapest product is a case
                 firstProductMargin("case")
+                //SCROLL TO TOP ON CLICK
+                window.scrollTo(0,0)
             }
             
             
@@ -685,21 +713,57 @@ $(document).ready(function() {
                 }))
                 
                 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                //USED to dynamically assign values to top for MODAL DIV PRODUCT DETAILS
                 allProducts[productIndex].specs.forEach(function(e, i, a){
                     //console.log(e)
-                    if(!e){console.log("There are no specs for this product")}
+                    if(!e[0]){console.log("There are no specs for this product")}
                     
                     $("#modal-paras-div")
                         .append($("<p>").text(e).addClass("modal-image-paras")
                         .css({position: "absolute", "top": top + "px"/*topIncrease + "px"*/, "z-index":"2",
                             "margin-top":"5px"
                     }))    
-                    top = top + 30
-                    //console.log(top,"top")
+                    
+                    
+                    //CREATING function to dynamically get previous element clientHeight and Top
+                        var modalArray = $("#modal-paras-div")[0].children
+                        
+                        //ADDS a class to make UNLOCKED CELL MESSAGE extra small
+                        if(e.search("Unlocked cell phones are compatible") > -1){modalArray[i].className = modalArray[i].className + " modal-para-xsmall"}
+                    //DATATYPE = NUMBER
+                        var prevClientH = modalArray[i].clientHeight
+                    //DATATYPE = STRING >> "60px"
+                        var prevTop = Number(modalArray[i].style.top.replace("px",""))
+                        console.log("prevClientH= " + prevClientH, "prevTop=" + prevTop)
+                    
+                        top = dynamicModalParagrahTops(prevClientH, prevTop) //top + 30
                 })
+                
+                function dynamicModalParagrahTops(prevH, prevTop){
+                    var h = prevH/2
+                    var finalResult = h + prevTop + 30
+                    console.log(finalResult,"finalResult b4 return")
+                    
+                    if(prevH === 60){return h + prevTop}
+                    else{return finalResult}
+                    
+                    return finalResult
+                }
                 
                 
             } //ENDOF: Modal Data
+            
+/*                    //PREVIOUS CLIENTHEIGHT
+                    var h = 100/2
+                    
+                    //CONSTANT
+                    var con = 30
+                    
+                    //previous top
+                    var prevTop = 250
+                    
+                    //FINAL RESULT
+                    var marg = h + prevTop + 30*/
             
             //ADDED: 071117 -1109 - MAY NOT WORK, IF SO, SWITCH BACK TO LITERALS
             var parentClass = this.parentElement.parentElement.classList[0]
