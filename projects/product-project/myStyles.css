@@ -7,23 +7,88 @@ div{padding: 5px;}
 #header{
     color: white;
     text-align: center;
+    font-size: 40px;
+    top: -5%;
+    left: 590px;
+    position: absolute;
+    min-width: 460px;
+    width: 20%;
     
 }
 
 #header-div{
-    background-color: chocolate;
+    background-color: dodgerblue;
     color: white;
     width: 100%;
-    height: 75px;
-    border-radius: 15px;
+    height: 135px;
     padding: 5px;
     margin-bottom: 10px;
-    position: relative;
+    position: fixed;
     left: 0px;
     top: 0px;
+    z-index: 1;
+    font-family: 'Francois One', sans-serif;
 }
 
 #modal-content-div{
     min-width: 508px;
     min-height: 313px;
 }
+
+body{overflow-x: hidden}
+
+#searchBox {
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 5px 0px 5px 10px;
+    position: fixed;
+    top: 77px;
+    left: 667px;
+    z-index: 1;
+    width: 300px;
+}
+
+#search-div {
+    margin-top: 85px;
+    border-bottom: 1px solid gainsboro;
+    z-index: 1;
+    position: fixed;
+    border-radius: 15px; 
+    left: -3%;
+}
+
+#searchBox::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(30, 144, 255, 0.5)e;
+}
+
+nav {
+    position:relative;
+    
+}
+
+#buttons-div{
+    position: fixed;
+    top: 120px;
+    z-index: 1;
+    min-width: 1109px;
+    left: 511px;
+    margin-right: 5px
+    
+}
+
+.my-buttons{
+   border-radius: 15px; 
+   margin-right: 25px;
+   padding: 10px 25px;
+   
+}
+/*
+
+font-family: 'Francois One', sans-serif;
+font-family: 'Passion One', cursive;
+font-family: 'Dancing Script', cursive;
+font-family: 'Acme', sans-serif;
+font-family: 'Asap', sans-serif;
+
+
+*/

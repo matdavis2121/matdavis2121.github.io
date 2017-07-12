@@ -32,21 +32,32 @@ $(document).ready(function() {
     /*F-e1. MAJOR MISTAKE - WAS ASSIGNING QUERIED DIV INSTEAD OF NEWLY CREATED DIV!!*/
     
     /*F-A - CREATING div || elements for each product*/
-    $("<div>").css("border", "1px solid black").addClass("product-div" + "-" +(i +1))
+    $("<div>").css({"border-bottom": "1px solid gainsboro", "margin-top":"15px", "padding-bottom":"15px",
+        "position":"relative", "min-width":"994px" })
+        .addClass("product-div" + "-" +(i +1))
         //F-n1. REMOVED-using in other ways -- //.append($("<p>").text(prod.type))
         //F-a1 - CREATING p elements for each product property
-        .append($("<p>").append("<img src='img/product/thumbs/" + prod.image +"'/>"))
-        .append($("<p>").text(prod.desc))
-        .append($("<p>").text("PRICE: $" + prod.price))
-        .append($("<p>").text(prod.color))
+        .append($("<p>").css({"position":"relative","left":"54px"})
+            .append("<img src='img/product/thumbs/" + prod.image +"'/>"))
+        
+        .append($("<p>").css({"position":"absolute","top":"10px","left":"140px", "font-size":"large","color":"black","margin-left":"65px"})
+            .text(prod.desc))
+        
+        .append($("<p>").css({"position":"absolute","top":"50px","left":"205px", "font-size":"large","color":"#e5c101"})
+            .text("PRICE: $" + prod.price))
+        
+        // .append($("<p>").text(prod.color)) //Not used to show data
           
         //AN ARRAY
-        .append($("<p>").text(prod.availableColors))
+        .append($("<p>").css({"position":"absolute","top":"80px","left":"205px", "font-size":"medium","color":"black"})
+            .text(prod.availableColors))
           
         //AN ARRAY
         //.append($("<p>").text(prod.specs))
           
-        .append($("<p>").text("IN-STOCK: " + prod.stock))
+        .append($("<p>").css({"position":"absolute","top":"110px","left":"205px"})
+            .text("IN-STOCK: " + prod.stock))
+            
         //FINAL TOUCHES - hr divider || appendTo MAIN
         //.append($("<hr>"))
         .appendTo("main")
@@ -54,32 +65,62 @@ $(document).ready(function() {
     /*F-B. ASSIGNING DATASet ATTRIBUTE*/
         var datasetSelector = ".product-div" + "-" +(i +1)
         var datasetIndex = ".product-div" + "-" +(i +1) 
+        //Assigning PHONE and CASE category || Assigning data-index
         $(datasetSelector).attr("data-product", prod.type)
         $(datasetSelector).attr("data-index", i)
         
-        
+        productDetailSpacing(datasetSelector)
         
         })
         // NOT RETURNING ANYTHING
     } //ENDOF: pullAllData
-  
-  
+        
+        //CSS - ONLY FOR 1ST PRODUCT - MARGIN
+        $("main div:nth-child(1)").css("margin-top","195px")
+        
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        function productDetailSpacing(select){
+            if($(select)[0].children[1].clientHeight === 50){
+                
+                var top1 = $(select)[0].children[2].style.top 
+                top1 = Number(top1.replace("px","")) + 10 + "px"
+                $(select)[0].children[2].style.top = top1
+                
+                var top2 = $(select)[0].children[3].style.top 
+                top2= Number(top2.replace("px","")) + 10 + "px"
+                $(select)[0].children[3].style.top = top2
+                
+                var top3 = $(select)[0].children[4].style.top 
+                top3 = Number(top3.replace("px","")) + 10 + "px"
+                $(select)[0].children[4].style.top = top3
+             
+               console.log(top1)
+            } else if($(select)[0].children[1].clientHeight === 25) {
+                $(select)[0].children[2].style.top = "50px" 
+                $(select)[0].children[3].style.top = "80px"
+                $(select)[0].children[4].style.top = "110px"
+            } else if($(select)[0].children[1].clientHeight === 75){
+                $(select)[0].children[2].style.top = "90px" 
+                $(select)[0].children[3].style.top = "120px"
+                $(select)[0].children[4].style.top = "150px"
+            }
+        }
   
   /*----------------------- 2. SEARCH INPUT---------------*/
   //2A. SEARCH DIV || SEARCH INPUT
     var searchInput = "<input placeholder='Search Products...' id='searchBox' type='text' name='searchAll' value><br>"
     var searchInput2 = "<input placeholder='Search ALL Products...' id='searchAll' type='text' name='searchAllProperties' value><br>"
-    var searchDiv = "<div id='search-div'></div>"
+    var searchDiv = "<div id='search-div' style='margin-top: 85px'></div>"
   
-    $("nav").after(searchDiv)
+    $("nav").append(searchDiv)
     $("#search-div").append(searchInput)
-    $("#search-div").append(searchInput2)
+    //$("#search-div").append(searchInput2)
     
   
   //1. Using DOM Javascript to invoke ONINPUT change VS. SEARCH CLICK
   //2. Needed to perform search on value change vs. on lost focus
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
-    document.getElementById("searchAll").oninput = function(event){console.log(searchAllProperties(event))}
+    //document.getElementById("searchAll").oninput = function(event){console.log(searchAllProperties(event))}
    
    ///////////////////////////////////////////////////////
     function searchResults(e){
@@ -90,9 +131,11 @@ $(document).ready(function() {
         if(unwantedCharacters(searchText)){return}
         
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //MAKE AN ARRAY OF UNWANTED CHARACTERS AND HAVE THEM LOOP THRU
+        //CHECK FOR UNWANTED CHARACTERS AND RETURN TRUE TO PREVENT FUNCTION FROM RUNNING
         function unwantedCharacters(sText){
             if(sText === " " || sText === "," || sText === "-" ){return true} 
+            
+            //COOL IDEA: Have a condition that checks for the indexOf(" ") to be  < 5?
             else if(sText[0] === " " && sText[1] === " "){return true}
             else { return false}
         }
@@ -106,11 +149,10 @@ $(document).ready(function() {
             // $("#searchBox")[0].selectionEnd = 0
         }
         if(searchText[1] === " "){searchText = searchText.replace(" ","")}
-        if(searchText[2] === " "){searchText = searchText.replace(" ","")}
+        //ONLY checking the 1st 2 indexes for empty spaces
+        //if(searchText[2] === " "){searchText = searchText.replace(" ","")}
 
         
-        
-
         
         var productClass
         //REMOVE PREVIOUS SPAN
@@ -124,6 +166,8 @@ $(document).ready(function() {
                     //if($("#searchBox")[0].value  < 1 || $("#searchBox")[0].value === ""){
                     //console.log(p.desc)
                     //COULDN'T USE THIS BC SOME PRODUCTS DIDN'T MATCH THE SEARCH
+                    
+                    //!! MAKE THIS A PARAMETER AND HARDCODE PARAGRAPH CHILD JQUERY?
                     $("div p:nth-child(2)")[i].innerHTML = p.desc
                     //}
                 })
@@ -161,7 +205,16 @@ $(document).ready(function() {
                 //2a. searches the text string which = "DESC" property value
                 //--SEARCHES ONLY THE PROD.DESC - make it search every match then every product, not just the 1st match?
                 var descriptionSearch = prod.desc.toLowerCase().search(searchText.toLowerCase())
+                
+                //2b. SEARCHES SPECS and AVAILABLE colors by turning array into a string combined with a space
+                var availableColorSearch = prod.availableColors.join(" ").toLowerCase().search(searchText.toLowerCase())    
+                var specsSearch = prod.specs.join(" ").toLowerCase().search(searchText.toLowerCase()) 
                     
+                    /* 1. NEED to pass in a parameter and possibly call search results 3 times? - may reset all so nogo?
+                       2. NEED to find all occurrences of prod.desc and see how to turn into a parameter
+                       3. May need to repeat all OR just use a check button to determine which way to search
+                    */
+   
                     //////////////////////////////////////
                     function findOtherMatches(firstMatch, nxtSearch, sText){
                         
@@ -181,7 +234,6 @@ $(document).ready(function() {
                             nxtSearch = sIndex + 1;     
                                     
                             return eArr.concat(findOtherMatches(firstMatch, nxtSearch, sText));
-                                
                         }
                     return result;
                     }
@@ -190,16 +242,8 @@ $(document).ready(function() {
                     var allResults = findOtherMatches(descriptionSearch, 0, searchText)
                     }
                     
-                    
-                    
-                    //LOOSE IF: IF for only running on the first product
-                    //Need to make this loop until all occurences of SEARCHTEXT is found
-                    // if(i === 0){
-                    // findOtherMatches(descriptionSearch)
-                    // }
 
                     
-                
                 productClass = "." + "product-div" + "-" + (i +1)
                 //Uses the indexOf + the length of the search to slice out word from "DESC" property
                 var highlightSearch
@@ -237,22 +281,7 @@ $(document).ready(function() {
                                 
                                 ///////////////////////////////////////////////////////////////////////////////////
                                 $(productClass + " p:nth-child(2):contains('" + highlightSearch + "')").html(function(){
-                                //console.log(highlightSearch,"highlightsearc")
-                                /*EXPERIMENTAL - NEEDS FURTHER TESTING --- WAS SUPPOSED TO LOOK FOR EVERY WORD*/
-                                // var newHTML = this.innerHTML.split(highlights).join(newSpanReplace).split(" ")
-                                // var pushy = [];
-                                // var highUppercased
-                                    
-                                //     if(highlights.length > 0){highUppercased = highlights[0].toUpperCase() + highlights.slice(1)}
-                                //     else(highUppercased = highlights[0].toUpperCase())
-                                //     var newSpanReplaceUpper = "<span class='highlighted-search-txt'>" + highUppercased + "</span>"
-                                    
-                                //     for(var i = 0; i < newHTML.length; i++){
-                                //         if(newHTML[i][0] === highUppercased[0]){
-                                //             pushy.push(newHTML[i].replace(highUppercased, newSpanReplaceUpper ))
-                                //         } else {pushy.push(newHTML[i])}
-                                //     }
-                                // return pushy.join(" ")
+      
                                 var part1 = this.innerHTML.split(highlightSearch) //.join(newSpanReplace)
                                 var part2Lower
                                 var partFinal
@@ -272,26 +301,24 @@ $(document).ready(function() {
                                 return partFinal
                                 }) //ENDOF:HTML SPAN FUNCTION
 
-                                    //span length = 126
-                                    //split by the entire span???
-
-                            //}
-                        //})
                         
                         $(".highlighted-search-txt").css({"padding":"4px",
                                                 "border-radius":"15px",
-                                                "background-color": "green", "color": "white"})  
+                                                "background-color": "dodgerblue", "color": "white"}) 
                             //}
-                    }
-                    
+                    } //ENDOF: ALL HIGHLIGHT SEARCHES
                     allHighlightSearches()
-                    
-
                 }
-            }) //ENDOF: EACH
+            }) //ENDOF: ALL PRODUCTS FOR EACH
         }
-            
-    }
+        
+ 
+    } //ENDOF SEARCHRESULTS
+    
+           //CSS - ONLY FOR 1ST PRODUCT - MARGIN
+        $("main div:nth-child(1)").css("margin-top","195px")
+
+/*----------------------- 2. SEARCH INPUT -- USES RECURSION TO SEARCH THRU MAIN 3 PRODUCT PROPERTIES(DESC, AVAILABLE, SPECS)---------------*/
     function searchAllProperties(e){
         //\\\\\\\\\\\\\\\\\
         //2A-SPECIAL. search EACH Product Function
@@ -404,8 +431,8 @@ $(document).ready(function() {
         /*  Notes:  n1 - If no filter selected and all products button is pressed, show msg?
                     n2 - use animation effect - translate??   
         */
-        var resetFilter = "<button id='reset-filter'>ALL PRODUCTS</button>"
-        $(resetFilter).appendTo("#search-div")
+        var resetFilter = "<button id='reset-filter' class='my-buttons'>ALL PRODUCTS</button>"
+        $(resetFilter).appendTo("nav #search-div")
         $("#reset-filter").click(productFilterReset)
         
         /////////////////////////////////
@@ -414,13 +441,16 @@ $(document).ready(function() {
                 $("div[data-product='phone']").show()
                 $("div[data-product='case']").show()
                 //console.log("Now showing ALL products!")
+                
+                //CSS - ONLY FOR 1ST PRODUCT - MARGIN
+                $("main div:nth-child(1)").css("margin-top","195px")
             }
         }                    
         
                     "3A. PHONE FILTER BUTTON"
         //Notes: n1 - Make search-div relative and make the elements inside absolute?
-        var phoneFilter = "<button id='phone-filter'>PHONES</button>"
-        $("#search-div").append(phoneFilter)
+        var phoneFilter = "<button id='phone-filter' class='my-buttons'>PHONES</button>"
+        $("nav #search-div").append(phoneFilter)
       
         //3a. ONCLICK EVENT - can I use THIS or EVENT?? || YES for BOTH
         $("#phone-filter").click(phoneClick)
@@ -432,17 +462,20 @@ $(document).ready(function() {
             $("div[data-product='case']").hide()
             //console.log("only showing phones")
             caseHide = true
+            
+            //CSS - ONLY FOR 1ST PRODUCT - MARGIN
+            $("main div:nth-child(1)").css("margin-top","195px")
         }
       
     
                     "3B. CASE FILTER BUTTON"
         //Notes: n1 - Make search-div relative and make the elements inside absolute?
-        var caseFilter = "<button id='case-filter'>CASES</button>"
-        $("#search-div").append(caseFilter)
+        var caseFilter = "<button id='case-filter' class='my-buttons'>CASES</button>"
+        $("nav #search-div").append(caseFilter)
       
         //3a. ONCLICK EVENT - can I use THIS or EVENT?? || YES for BOTH
         $("#case-filter").click(caseClick)
-      
+        
         ///////////////////////////////////////////////
         function caseClick(e){
             if(caseHide){$("div[data-product='case']").show()}
@@ -450,15 +483,18 @@ $(document).ready(function() {
             $("div[data-product='phone']").hide()
             //console.log("only showing cases")
             phoneHide = true
+            
+            //CSS - ONLY FOR 1ST PRODUCT - MARGIN
+            $("main div:nth-child(1)").css("margin-top","195px")
         }  
     //   img/product/thumbs/edge-gold.jpg
     //   img/product/edge-gold.jpg
     
     
     
-                    "3C-LOW TO HIGH BUTTON"
-        var priceToggleFilter = "<button id='toggle-price-filter'>Price</button>"
-        $("#search-div").append(priceToggleFilter)
+                    "3C-LOW TO HIGH TOGGLE BUTTON"
+        var priceToggleFilter = "<button id='toggle-price-filter' class='my-buttons'>Price</button>"
+        $("nav #search-div").append(priceToggleFilter)
         
         //3a. ONCLICK EVENT - can I use THIS or EVENT?? || YES for BOTH
         $("#toggle-price-filter").click(toggleClick)
@@ -489,42 +525,12 @@ $(document).ready(function() {
         
         priceGetter()
         //\\\\\\\\\\\\\\\\\\\\\\
+        //COMMENTED OUT: Each run of the function gave different results  -1st run was correct then reversed
         function toggleClick(){
- 
-            
-            // //\\\\\\\\\\\\\\\\\\\\\           
-            // function toggleORNah(p){
-            //     //console.log(p,"before sort")
-            //     var priceSort = p.sort(function(a, b){return a-b})
-            //     var childTotal = $("main")[0].childElementCount
-            //     var firstPrice = $("main div:nth-child(1) p:nth-child(3)")[0].innerText.replace("PRICE: $","")
-            //     console.log(priceSort,"priceSort")
-            //     console.log(firstPrice,"firstPrice")
-                
-            //     if(priceSort.toString().length > 4){
-            //         var compare1 = priceSort[0].toString().slice(0, priceSort[0].toString().length)
-            //         console.log(compare1,"compare1")
-            //     } else if (priceSort.toString().length <= 4){
-            //         var compare1 = priceSort[0].toString()
-            //     }
-                
-            //     //IF FIRST PRICE IS THE LOWEST PRICE, REVERSE ORDER AND RETURN
-            //     if(firstPrice === compare1){
-            //         p = p.sort(function(a, b){return b-a})
-            //         console.log(p,"toggle reverse")
-            //         console.log(firstPrice)
-            //     }
-            //     //HIGHEST NUMBER HAS ADD DECIMAL POINT, NOT PRESENT IN JSON DATA - MAKE DYNAMIC
-            //     else if(firstPrice === priceSort[priceSort.length-1].toString().slice(0, priceSort[priceSort.length-1].toString().length-2)){
-            //         p = priceSort
-            //         console.log(p,"toggle normal")
-            //     }
-            //     //console.log(p)
-            //     return p
-            // }
-            
-            //prices = toggleORNah(prices)
+
             var firstPrice = $("main div:nth-child(1) p:nth-child(3)")[0].innerText.replace("PRICE: $","")
+            //NEED to make into a dynamic variable
+            /*1. sort prices-set to variable, 2. compare firstPrice to the 1st index of prices after sorted, 3. move accordingly*/
             if(firstPrice === "7.99"){
                 prices.sort(function(a, b){return b-a})
                 reOrderByPrice(prices, priceCopy)
@@ -533,12 +539,11 @@ $(document).ready(function() {
                 reOrderByPrice(prices, priceCopy)
             }
             
-            console.log(prices,"prices")
-            console.log(priceCopy, "priceCopy")
-           
+            //console.log(prices,"prices")
+            //console.log(priceCopy, "priceCopy")
            
            return prices
-        }
+        } //ENDOF TOGGLECLICK
         //toggleClick()   
         
         //reOrders DIVS
@@ -546,12 +551,12 @@ $(document).ready(function() {
         function reOrderByPrice(p1, pcopy){
             _.each(p1, function(each, i){
                 _.each(pcopy, function(pc1, index){
-                    //ACCOUNTS FOR 0 -Number() doesn't like 0's
+                    //ACCOUNTS FOR 0 index after attached to price -Number() doesn't like 0's after decimals if last
                     if(pc1.slice(-2) === " 0"){
                         if(each.toString() === pc1.slice(0, pc1.indexOf(" "))){
                             $(".product-div-" + (Number(pc1.slice(-1))+1)).appendTo("main")
                         }
-                    //ACCOUNTS FOR 10 -Number() doesn't like 0's
+                    //ACCOUNTS FOR 10 index after attached to price -Number() doesn't like 0's after decimals if last
                     } else if (pc1.slice(-2) === "10"){
                         if(each.toString() === pc1.slice(0, pc1.indexOf(" "))+1){
                             $(".product-div-" + (Number(pc1.slice(-2))+1)).appendTo("main")
@@ -560,24 +565,30 @@ $(document).ready(function() {
                     //DEALS WITH ALL OTHER CASES
                     //1. If number DOESN'T have decimal
                     } else if(pc1.indexOf(".") === -1){
-                        if(each.toString() === pc1.slice(0, pc1.indexOf(" "))+ "." +pc1.slice(pc1.indexOf(" ")+1) ){
+                        if(each.toString() === pc1.slice(0, pc1.indexOf(" ")) + "." + pc1.slice(pc1.indexOf(" ")+1) ){
                             $(".product-div-" + (Number(pc1.slice(-1))+1)).appendTo("main")
                         } 
                     //2. If number DOES have decimal
                     } else if(pc1.indexOf(".") > -1){
-                        if(each.toString() === pc1.slice(0, pc1.indexOf(" "))+pc1.slice(pc1.indexOf(" ")+1) ){
+                        if(each.toString() === pc1.slice(0, pc1.indexOf(" ")) + pc1.slice(pc1.indexOf(" ") + 1) ){
                             $(".product-div-" + (Number(pc1.slice(-1))+1)).appendTo("main")
                         }
                     }
                 })
             })
-        }
+        } //ENDOF: REORDER FUNCTION
+    
+    //PLACE ALL BUTTONS IN A DIV
+    $("#search-div button").wrapAll($("<div>").attr({"id":"buttons-div", /*"":"", "":""*/})
+        .css({/*"position":"absolute", "top":"30px", "z-index":"1",
+            "min-width":"382px","left":"44%"*/
+        }))
+    
+    
                     
                     
     /*------------------- 4. ON CLICK ----------------*/  
     //LOCATE ALL IMAGES - make a click function
-    // var windowInnerW = (window.innerWidth - 17);
-    // var windowInnerH = (window.outerHeight - 17);
     var currentScrollY
 
     /////////////////////////////
@@ -588,9 +599,9 @@ $(document).ready(function() {
         
         //1. MODAL-WRAPPER
         $("<div>").attr({id: "modal-wrapper"})
-        .css({"width":"100%", "height":"100%", "background-color":"", "z-index":"1",
+        .css({"width":"100%", "height":"100%", "background-color":"", "z-index":"2",
             "opacity":"1", "margin": "-1% auto", "position": "absolute", "left": "0%", "display": "block"})
-        //2. MYModal div
+        //2. MYModal div - BACKGROUND, OPACITY
         .append($("<div>")
         .attr({id: "myModal"})
         .css({"width":"100%", "height":((window.outerHeight * 3) + "px"), "background-color":"black",
@@ -599,10 +610,10 @@ $(document).ready(function() {
         .prependTo("body")
         
         
-        //3a. MODAL CONTENT DIV - LINE 471(ONLOAD EVENT FOR HEIGHT)
+        //3a. MODAL CONTENT DIV >> Image and Paras for product details- LINE 471(ONLOAD EVENT FOR HEIGHT)
         $("#modal-wrapper")
         .append($("<div>").attr({id: "modal-content-div"})
-        .css({"margin": "5% auto", "z-index":"2", "opacity":"1", "position": "absolute",
+        .css({"margin": "5% auto", "z-index":"3", "opacity":"1", "position": "absolute",
             "left":"25%", "width":"50%","height":"" ,
             "top":window.scrollY, "background-color": "white", "border-radius":"26px"}))
             
@@ -626,7 +637,7 @@ $(document).ready(function() {
             function modalData(){
                 var top = 0
                 
-                 //PARAGRAPH DIV
+                 //PARAGRAPHS DIV
                 $("#modal-content-div").append($("<div>").attr("id","modal-paras-div")
                 .css({"position":"absolute","top":"5%","left":"30%","margin-right":"5%","width":"50%",
                     "margin-left":"10%"
@@ -634,7 +645,7 @@ $(document).ready(function() {
                 
                 //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
                 allProducts[productIndex].specs.forEach(function(e, i, a){
-                    console.log(e)
+                    //console.log(e)
                     if(!e){console.log("There are no specs for this product")}
                     
                     $("#modal-paras-div")
@@ -643,35 +654,20 @@ $(document).ready(function() {
                             "margin-top":"5px"
                     }))    
                     top = top + 30
-                    console.log(top,"top")
+                    //console.log(top,"top")
                 })
                 
-                //\\\\\\\\\\\\\\\\\\\\\
-/*                function topIncreaser(top){
-                    var newTop
-                    
-                    if(top === 0){return 0}
-                    else if(top > 0){
-                        //USED . -class operator instead of # operator
-                        var syntax = "#modal-paras-div p:nth-child(000)".replace("000", top)
-                        if($(syntax)[0] === undefined){console.log("syntax variable undefined","topIncrease STOPPED!"); return }
-                        else{var previousTop = $(syntax)[0].clientHeight}
-                        console.log(previousTop,"previousTop")
-                        newTop = previousTop + 20
-                    }
-                        console.log(newTop,previousTop,"newTop+PREVIOUS")
-                    return newTop
-                }//ENDOF: topIncreaser*/
                 
             } //ENDOF: Modal Data
             
-            
+            //ADDED: 071117 -1109 - MAY NOT WORK, IF SO, SWITCH BACK TO LITERALS
+            var parentClass = this.parentElement.parentElement.classList[0]
             //IMAGE SIZES FOR SMALLER IMAGES        
             if(this.parentElement.parentElement.dataset.product === "case"){$("#modal-image-div")[0].style.width = "23%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-10"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-11"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-3"){$("#modal-image-div")[0].style.width = "35%";$("#modal-image-div")[0].style.left = "6%"}
-            if(this.parentElement.parentElement.classList[0] === "product-div-5"){$("#modal-image-div")[0].style.width = "30%";$("#modal-image-div")[0].style.left = "6%"}
+            if(parentClass === "product-div-10"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
+            if(parentClass === "product-div-11"){$("#modal-image-div")[0].style.width = "45%";$("#modal-image-div")[0].style.left = "0%"}
+            if(parentClass === "product-div-3"){$("#modal-image-div")[0].style.width = "35%";$("#modal-image-div")[0].style.left = "6%"}
+            if(parentClass === "product-div-5"){$("#modal-image-div")[0].style.width = "30%";$("#modal-image-div")[0].style.left = "6%"}
             
         
         //4. MYMODAL-img - CLICK EVENT
@@ -679,44 +675,43 @@ $(document).ready(function() {
             //the element was not created yet
         $("#modal-image").click(function(){ 
             $("#modal-wrapper").remove()
-            //$("#modal-wrapper").css("display","none")
             
-            //GIVE VARIABLE LATER
+            //GIVE VARIABLE LATER - Did this work?
             window.onscroll = ""
         })
         
+        //4. MYMODAL-FULLSCREEN DIV - CLICK EVENT >> REMOVES WRAPPER CONTAINING ALL MODAL CONTENT
         //LOOK INTO: nesting event handlers -- MODAL-WRAPPER CLICK EVENT
         $("#modal-wrapper").click(function(){ 
             $("#modal-wrapper").remove()
-            //$("#modal-wrapper").css("display","none")
             window.onscroll = ""
         })
         
         
         //4B. MODAL SCROLL EVENT
         window.onscroll = function(){
-        //REMOVE MODAL AFTER SCROLLING DOWN PAST BOTTOM OF IMAGE
-        
-        var clientH = $("#modal-wrapper img")[0].clientHeight
-        var modalScrollBottom = window.outerHeight * .15 + clientH
-        
-        modalScrollBottom = modalScrollBottom + currentScrollY
-        var modalScrollTop = currentScrollY - clientH
-        //console.log()
-        //modalScroll = modalScroll + 500
-        
-        if(window.scrollY > modalScrollBottom){
-            $("#modal-wrapper").remove();
-            window.onscroll = ""
-        } else if (window.scrollY < modalScrollTop){
-            $("#modal-wrapper").remove();
-            window.onscroll = ""
+            //REMOVE MODAL AFTER SCROLLING DOWN PAST BOTTOM OF IMAGE
+            
+            var clientH = $("#modal-wrapper img")[0].clientHeight
+            var modalScrollBottom = window.outerHeight * .15 + clientH
+            
+            modalScrollBottom = modalScrollBottom + currentScrollY
+            var modalScrollTop = currentScrollY - clientH
+            //console.log()
+            //modalScroll = modalScroll + 500
+            
+            if(window.scrollY > modalScrollBottom){
+                $("#modal-wrapper").remove();
+                window.onscroll = ""
+            } else if (window.scrollY < modalScrollTop){
+                $("#modal-wrapper").remove();
+                window.onscroll = ""
+            }
+                //alert("success!")}
         }
-            //alert("success!")}
-        }
         
         
-        //3c1 >> MODAL-CONTENT-DIV HEIGHT
+        //3c1 >> MODAL-CONTENT-DIV HEIGHT -IMAGE ONLOAD
         document.getElementById("modal-image").onload = function(){
             //alert("function started")
             var modContentH = $("#modal-content-div img")[0].clientHeight + 60
@@ -730,12 +725,20 @@ $(document).ready(function() {
             
         //3c2 >> WINDOW RESIZE
             window.onresize = function(){
-                var modContentH = $("#modal-content-div img")[0].clientHeight + 60
-                $("#modal-content-div")[0].style.height = modContentH + "px"
-                
+                if($("#modal-content-div img")[0] !== undefined){
+                    var modContentH = $("#modal-content-div img")[0].clientHeight + 60
+                    $("#modal-content-div")[0].style.height = modContentH + "px"
+                } else {console.log("No Modal Image showing. || Source Function = window.onresize")}
                 //reruns to resize
                 //modalData()
-            }            
+                console.log("out")
+                allProducts.forEach(function(i){
+                    var datasetSelector2 = ".product-div" + "-" +(i +1)
+                    productDetailSpacing(datasetSelector2)
+                    console.log("in!")
+                })
+                
+            }     
     
     })  //ENDOF: IMG CLICK FUNCTION
     
@@ -790,8 +793,87 @@ $(document).ready(function() {
             //                             "border-radius":"15px",
             //                             "background-color": "green", "color": "white"})
         
+        
+        
+        /*-------------------------------  "07/11/2017 23:17:03"  -------------------------------------*/
+                            //\\\\\\\\\\\\\\\\\\\\\
+/*                function topIncreaser(top){
+                    var newTop
+                    
+                    if(top === 0){return 0}
+                    else if(top > 0){
+                        //USED . -class operator instead of # operator
+                        var syntax = "#modal-paras-div p:nth-child(000)".replace("000", top)
+                        if($(syntax)[0] === undefined){console.log("syntax variable undefined","topIncrease STOPPED!"); return }
+                        else{var previousTop = $(syntax)[0].clientHeight}
+                        console.log(previousTop,"previousTop")
+                        newTop = previousTop + 20
+                    }
+                        console.log(newTop,previousTop,"newTop+PREVIOUS")
+                    return newTop
+                }//ENDOF: topIncreaser*/
+                
+                
+     ///////////////////////////////////////////////////////////////////////////////////////////////           
+    //LOCATE ALL IMAGES - make a click function
+    // var windowInnerW = (window.innerWidth - 17);
+    // var windowInnerH = (window.outerHeight - 17);
    
    
+   
+   ////////////////////////////////////////////////////////////////////////////////////////////////
+               // //\\\\\\\\\\\\\\\\\\\\\           
+            // function toggleORNah(p){
+            //     //console.log(p,"before sort")
+            //     var priceSort = p.sort(function(a, b){return a-b})
+            //     var childTotal = $("main")[0].childElementCount
+            //     var firstPrice = $("main div:nth-child(1) p:nth-child(3)")[0].innerText.replace("PRICE: $","")
+            //     console.log(priceSort,"priceSort")
+            //     console.log(firstPrice,"firstPrice")
+                
+            //     if(priceSort.toString().length > 4){
+            //         var compare1 = priceSort[0].toString().slice(0, priceSort[0].toString().length)
+            //         console.log(compare1,"compare1")
+            //     } else if (priceSort.toString().length <= 4){
+            //         var compare1 = priceSort[0].toString()
+            //     }
+                
+            //     //IF FIRST PRICE IS THE LOWEST PRICE, REVERSE ORDER AND RETURN
+            //     if(firstPrice === compare1){
+            //         p = p.sort(function(a, b){return b-a})
+            //         console.log(p,"toggle reverse")
+            //         console.log(firstPrice)
+            //     }
+            //     //HIGHEST NUMBER HAS ADD DECIMAL POINT, NOT PRESENT IN JSON DATA - MAKE DYNAMIC
+            //     else if(firstPrice === priceSort[priceSort.length-1].toString().slice(0, priceSort[priceSort.length-1].toString().length-2)){
+            //         p = priceSort
+            //         console.log(p,"toggle normal")
+            //     }
+            //     //console.log(p)
+            //     return p
+            // } ENDOF: TOGGLE OR NAH
+            
+            //prices = toggleORNah(prices)
+   
+   
+   
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////
+                             //console.log(highlightSearch,"highlightsearc")
+                                /*EXPERIMENTAL - NEEDS FURTHER TESTING --- WAS SUPPOSED TO LOOK FOR EVERY WORD*/
+                                // var newHTML = this.innerHTML.split(highlights).join(newSpanReplace).split(" ")
+                                // var pushy = [];
+                                // var highUppercased
+                                    
+                                //     if(highlights.length > 0){highUppercased = highlights[0].toUpperCase() + highlights.slice(1)}
+                                //     else(highUppercased = highlights[0].toUpperCase())
+                                //     var newSpanReplaceUpper = "<span class='highlighted-search-txt'>" + highUppercased + "</span>"
+                                    
+                                //     for(var i = 0; i < newHTML.length; i++){
+                                //         if(newHTML[i][0] === highUppercased[0]){
+                                //             pushy.push(newHTML[i].replace(highUppercased, newSpanReplaceUpper ))
+                                //         } else {pushy.push(newHTML[i])}
+                                //     }
+                                // return pushy.join(" ")
    
   // ----------------ALL YOUR CODE GOES ABOVE HERE--------------- //
 }); //ENDOF: .JSON
