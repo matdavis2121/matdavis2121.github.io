@@ -130,7 +130,24 @@ $(document).ready(function() {
   
   //1. Using DOM Javascript to invoke ONINPUT change VS. SEARCH CLICK
   //2. Needed to perform search on value change vs. on lost focus
+    
+    //3.checkbox which allows user to switch default search options.
+    $("#search-div").prepend("<input type='checkbox' id='checker' name='search-type' value='false' description='Search all product details (no highlight)'>")
+    
+    //DEFAULT SEARCH OPTION: 1
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
+    
+    $("#checker").click(function(){
+        if($("#checker")[0].checked === false){
+            //DEFAULT SEARCH OPTION: 1
+            document.getElementById("searchBox").oninput = function(event){searchResults(event)}
+        } else {
+            //SEARCH OPTION: 2
+            document.getElementById("searchBox").oninput = function(event){searchAllProperties(event)}
+        }    
+        
+    })
+    
     //document.getElementById("searchAll").oninput = function(event){console.log(searchAllProperties(event))}
    
    ///////////////////////////////////////////////////////
@@ -369,7 +386,7 @@ $(document).ready(function() {
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         function findALLMatches(eachProductProperty){
             //2a-special. searches the text string which = "DESC" property value
-            var searchAllText = $("#searchAll")[0].value.toLowerCase()
+            var searchAllText = $("#searchBox")[0].value.toLowerCase()
             
             if(eachProductProperty === undefined){}
             
@@ -434,7 +451,11 @@ $(document).ready(function() {
         }
         
         //return productHits
-        
+        if($("main div:nth-child(1)")[0].dataset.product === "phone"){
+            firstProductMargin("phone")
+        } else if ($("main div:nth-child(1)")[0].dataset.product === "case"){
+            firstProductMargin("case")
+        }
     } //ENDOF: SEARCH ALL PROPERTIES - USING RECURSION
   
   

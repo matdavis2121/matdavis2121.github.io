@@ -102,6 +102,11 @@ nav {
     font-style: italic;
 }
 
+input[type=checkbox] {
+    position: absolute;
+    top: -6px;
+    left: 1030px;
+}
 /*main div {margin-top: 15px}*/
 /*
 
