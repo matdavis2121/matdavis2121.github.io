@@ -1,3 +1,7 @@
+main{
+    margin-top: 210px;
+}
+
 div{padding: 5px;}
 
 .modal-image-paras{
@@ -9,7 +13,7 @@ div{padding: 5px;}
     text-align: center;
     font-size: 40px;
     top: -5%;
-    left: 590px;
+    left: 390px;
     position: absolute;
     min-width: 460px;
     width: 20%;
@@ -43,18 +47,22 @@ body{overflow-x: hidden}
     padding: 5px 0px 5px 10px;
     position: fixed;
     top: 77px;
-    left: 667px;
+    left: 467px;
     z-index: 1;
     width: 300px;
 }
 
 #search-div {
     margin-top: 85px;
-    border-bottom: 1px solid gainsboro;
+    /*border-bottom: 1px solid gainsboro;*/
     z-index: 1;
     position: fixed;
     border-radius: 15px; 
-    left: -3%;
+    left: 22%;
+    
+    width: 890px;
+    height: 100px;
+    top: 0px;
 }
 
 #searchBox::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -71,7 +79,7 @@ nav {
     top: 120px;
     z-index: 1;
     min-width: 1109px;
-    left: 511px;
+    left: 311px;
     margin-right: 5px
     
 }
@@ -103,9 +111,20 @@ nav {
 }
 
 input[type=checkbox] {
-    position: absolute;
-    top: -6px;
-    left: 1030px;
+    position: fixed;
+    top: 86px;
+    left: 776px;
+    background-color: dodgerblue;
+    width: 20px;
+    height: 15px;
+    
+}
+
+label{
+    position: fixed;
+    left: 799px;
+    top: 86px;
+    color: white;
 }
 /*main div {margin-top: 15px}*/
 /*

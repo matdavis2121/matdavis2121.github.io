@@ -85,7 +85,8 @@ $(document).ready(function() {
     } //ENDOF: pullAllData
         
         //CSS - ONLY FOR 1ST PRODUCT - MARGIN
-        $("main div:nth-child(1)").css("margin-top","195px")
+        //REMOVED- JUST GAVE THE MAIN SOME topMARGIN - 071217 -0950PM
+        //$("main div:nth-child(1)").css("margin-top","195px")
         
         
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -105,7 +106,7 @@ $(document).ready(function() {
                 top3 = Number(top3.replace("px","")) + 10 + "px"
                 $(select)[0].children[4].style.top = top3
              
-               console.log(top1)
+               //console.log(top1)
             } else if($(select)[0].children[1].clientHeight === 25) {
                 $(select)[0].children[2].style.top = "50px" 
                 $(select)[0].children[3].style.top = "80px"
@@ -132,18 +133,21 @@ $(document).ready(function() {
   //2. Needed to perform search on value change vs. on lost focus
     
     //3.checkbox which allows user to switch default search options.
-    $("#search-div").prepend("<input type='checkbox' id='checker' name='search-type' value='false' description='Search all product details (no highlight)'>")
+    $("#search-div").prepend("<input type='checkbox' id='checker' name='search-type' value='false' title='Search all product details (no highlight)'> <label>Search All Details</label>")
     
     //DEFAULT SEARCH OPTION: 1
     document.getElementById("searchBox").oninput = function(event){searchResults(event)}
     
+    //CHECKBOX CLICK EVENT - DETERMINES SEARCH OPTION 1 OR 2
     $("#checker").click(function(){
         if($("#checker")[0].checked === false){
-            //DEFAULT SEARCH OPTION: 1
+            //DEFAULT SEARCH OPTION: 1 - GOOD OLE' LOOPS, RESETS AND LOGIC
             document.getElementById("searchBox").oninput = function(event){searchResults(event)}
+            $("label")[0].style.color = "white"
         } else {
-            //SEARCH OPTION: 2
+            //SEARCH OPTION: 2 -RECURSIVE CASE
             document.getElementById("searchBox").oninput = function(event){searchAllProperties(event)}
+            $("label")[0].style.color = "greenyellow"
         }    
         
     })
@@ -416,7 +420,7 @@ $(document).ready(function() {
         }) // ENDOF: ALLPRODUCT FOR EACH
         
         
-        console.log(productHits)
+        //console.log(productHits)
         //Array of INDEXES of products NOT MATCHING SEARCH
         var hideArray = filterIndexes(productHits)
         //RESET ALL DIVS
@@ -425,7 +429,7 @@ $(document).ready(function() {
         //HIDE MATCHED DIVS
         if(hideArray !== undefined){
             hideArray.forEach(function(e, i, a){
-                console.log(e,"value of e")
+                //console.log(e,"value of e")
                 $(".product-div-" + (e+1)).hide()
             }) 
         } else { 
@@ -546,30 +550,38 @@ $(document).ready(function() {
     
             //\\\\\\\\\\\\\\\\\\\\\\\\\\\
             function firstProductMargin(datasetString){
-                var eachDiv = $("main")[0].childNodes
-                var stopAfterFirst = false
-                //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-                eachDiv.forEach(function(e,i,a){
-                    if(i !== 0){
-                        //BIG ERROR: these vars evaluate to STRINGS, can no longer access element?
-                        var divMargin = e.style.marginTop
-                        var divDisplay = e.style.display
-                        var pDataset =  e.dataset.product
-                        e.dataset.firstProduct = false
-                    }
+                // var eachDiv = $("main")[0].childNodes
+                // var stopAfterFirst = false
+                // var firstProductwithMargin
+                // //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                // eachDiv.forEach(function(e,i,a){
+                //     if(i !== 0){
+                //         //BIG ERROR: these vars evaluate to STRINGS, can no longer access element?
+                //         var divMargin = e.style.marginTop
+                //         var divDisplay = e.style.display
+                //         var pDataset =  e.dataset.product
+                //         e.dataset.firstProduct = false
+                //     }
                     
-                    if(divMargin === "195px"){$("main")[0].childNodes[i].style.marginTop = "15px"}
+                //     if(divMargin === "195px"){$("main")[0].childNodes[i].style.marginTop = "15px"}
+                //     console.log("OUTSIDE ELSE IF")
+                //     if(i === 0 || stopAfterFirst){ console.log("NOT ELIGIBLE!")/*DO NOTHING}
+                //     else if(pDataset === datasetString && divDisplay !== "none" ){
+                //         console.log("INSIDE ELSE IF")
+                //         //CREATED to easily find first child
+                //         e.dataset.firstProduct = true
+                        
+                //         $("main")[0].childNodes[i].style.marginTop = "195px"
+                //         stopAfterFirst = true
+                //         firstProductwithMargin = i
+                //     }
                     
-                    if(i === 0 || stopAfterFirst){/*DO NOTHING*/}
-                    else if(pDataset === datasetString && divDisplay !== "none" ){
-                        //CREATED to easily find first child
-                        e.dataset.firstProduct = true
-                        
-                        $("main")[0].childNodes[i].style.marginTop = "195px"
-                        stopAfterFirst = true
-                    }
-                        
-                })
+                //     if(i === firstProductwithMargin && $("main")[0].childNodes[i].style.marginTop !== "195px"){
+                //         alert("MARGIN NOT ADJUSTED!")
+                //         $("main")[0].style.marginTop = "210px"
+                //     }
+                //       */ 
+                //})
             } //ENDOF firstProductMargin
     
     
@@ -617,14 +629,21 @@ $(document).ready(function() {
                 prices.sort(function(a, b){return b-a})
                 reOrderByPrice(prices, priceCopy)
                 
-                //USING PHONE: bc the cheapest product is a phone
-                firstProductMargin("phone")
+                 
+                if($("main div:nth-child(1)")[0].dataset.product === "phone"){
+                    firstProductMargin("phone")
+                } else if ($("main div:nth-child(1)")[0].dataset.product === "case"){
+                    firstProductMargin("case")
+                }
             } else {
                 prices.sort(function(a, b){return a-b})
                 reOrderByPrice(prices, priceCopy)
                 
-                //USING CASE: bc the cheapest product is a case
-                firstProductMargin("case")
+                if($("main div:nth-child(1)")[0].dataset.product === "phone"){
+                    firstProductMargin("phone")
+                } else if ($("main div:nth-child(1)")[0].dataset.product === "case"){
+                    firstProductMargin("case")
+                }
                 //SCROLL TO TOP ON CLICK
                 window.scrollTo(0,0)
             }
@@ -759,7 +778,7 @@ $(document).ready(function() {
                         var prevClientH = modalArray[i].clientHeight
                     //DATATYPE = STRING >> "60px"
                         var prevTop = Number(modalArray[i].style.top.replace("px",""))
-                        console.log("prevClientH= " + prevClientH, "prevTop=" + prevTop)
+                        //console.log("prevClientH= " + prevClientH, "prevTop=" + prevTop)
                     
                         top = dynamicModalParagrahTops(prevClientH, prevTop) //top + 30
                 })
@@ -767,7 +786,7 @@ $(document).ready(function() {
                 function dynamicModalParagrahTops(prevH, prevTop){
                     var h = prevH/2
                     var finalResult = h + prevTop + 30
-                    console.log(finalResult,"finalResult b4 return")
+                    //console.log(finalResult,"finalResult b4 return")
                     
                     if(prevH === 60){return h + prevTop}
                     else{return finalResult}
@@ -854,6 +873,10 @@ $(document).ready(function() {
             //Adds spec data from JSON as paragraphs to pop up MODAL
             modalData()
             
+                 //RESIZES BIGGER MODAL CONTENT DIV AND GIVES THEM MORE HEIGHT    
+            if(window.innerWidth < 1400 && $("#modal-content-div")[0] !== undefined){
+                $("#modal-content-div")[0].style.minWidth = 669 + "px"
+            }
             
         //3c2 >> WINDOW RESIZE
             window.onresize = function(){
@@ -863,17 +886,20 @@ $(document).ready(function() {
                 } else {console.log("No Modal Image showing. || Source Function = window.onresize")}
                 
             
-            //RESIZES BIGGER MODAL CONTENT DIV AND GIVES THEM MORE HEIGHT    
-            if(window.innerWidth < 1354){
+           /* //RESIZES BIGGER MODAL CONTENT DIV AND GIVES THEM MORE HEIGHT    
+            if(window.innerWidth < 1400 && $("#modal-content-div")[0] !== undefined){
                 $("#modal-content-div")[0].style.minWidth = 669 + "px"
-            }
+            }*/
                 
                 //reruns to resize
                 //modalData()
                 //console.log("out")
                 allProducts.forEach(function(e, i){
                     var datasetSelector2 = ".product-div" + "-" +(i +1)
-                    productDetailSpacing(datasetSelector2)
+                    
+                    //REMOVED TEMPORARILY - 071217 - 0956PM
+                    //productDetailSpacing(datasetSelector2)
+                    
                     //console.log("in!")
                     
                 })
@@ -882,6 +908,7 @@ $(document).ready(function() {
     
     })  //ENDOF: IMG CLICK FUNCTION
     
+
     
         unlockedWarning()
         //ADDING: carrier warning to main product and REMOVED from MODAL
@@ -891,7 +918,7 @@ $(document).ready(function() {
                 
                 if(p.specs[p.specs.length - 1] === undefined){}
                 else if(p.specs[p.specs.length - 1].search("Unlocked cell phones are compatible") > -1){
-                    console.log(i)
+                    //console.log(i)
                     var specText = p.specs[p.specs.length - 1]
                     $("<p>").css({"position":"absolute","top":"140px","left":"205px"})
                     .text(specText).addClass("modal-para-xsmall").appendTo(".product-div" + "-" +(i +1))
