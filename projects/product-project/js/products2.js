@@ -70,13 +70,14 @@ $(document).ready(function() {
         //.append($("<hr>"))
         .appendTo("main")
         
+        
     /*F-B. ASSIGNING DATASet ATTRIBUTE*/
         var datasetSelector = ".product-div" + "-" +(i +1)
         var datasetIndex = ".product-div" + "-" +(i +1) 
         //Assigning PHONE and CASE category || Assigning data-index
         $(datasetSelector).attr("data-product", prod.type)
         $(datasetSelector).attr("data-index", i)
-        
+    
         productDetailSpacing(datasetSelector)
         
         })
@@ -85,6 +86,7 @@ $(document).ready(function() {
         
         //CSS - ONLY FOR 1ST PRODUCT - MARGIN
         $("main div:nth-child(1)").css("margin-top","195px")
+        
         
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         //1. SPACING FOR PRODUCT DIVS
@@ -717,6 +719,7 @@ $(document).ready(function() {
                 allProducts[productIndex].specs.forEach(function(e, i, a){
                     //console.log(e)
                     if(!e[0]){console.log("There are no specs for this product")}
+                    if(e.search("Unlocked cell phones are compatible") > -1){e = ""}
                     
                     $("#modal-paras-div")
                         .append($("<p>").text(e).addClass("modal-image-paras")
@@ -728,8 +731,9 @@ $(document).ready(function() {
                     //CREATING function to dynamically get previous element clientHeight and Top
                         var modalArray = $("#modal-paras-div")[0].children
                         
-                        //ADDS a class to make UNLOCKED CELL MESSAGE extra small
-                        if(e.search("Unlocked cell phones are compatible") > -1){modalArray[i].className = modalArray[i].className + " modal-para-xsmall"}
+                    /*//ADDS a class to make UNLOCKED CELL MESSAGE extra small
+                    if(e.search("Unlocked cell phones are compatible") > -1){modalArray[i].className = modalArray[i].className + " modal-para-xsmall"}*/
+                    
                     //DATATYPE = NUMBER
                         var prevClientH = modalArray[i].clientHeight
                     //DATATYPE = STRING >> "60px"
@@ -820,6 +824,7 @@ $(document).ready(function() {
         document.getElementById("modal-image").onload = function(){
             //alert("function started")
             var modContentH = $("#modal-content-div img")[0].clientHeight + 60
+            
             $("#modal-content-div")[0].style.height = modContentH + "px"
             
             $("#myModal")[0].style.top = ((window.scrollY - 350) + "px")
@@ -828,25 +833,52 @@ $(document).ready(function() {
             //Adds spec data from JSON as paragraphs to pop up MODAL
             modalData()
             
+            
         //3c2 >> WINDOW RESIZE
             window.onresize = function(){
                 if($("#modal-content-div img")[0] !== undefined){
-                    var modContentH = $("#modal-content-div img")[0].clientHeight + 60
+                    var modContentH = $("#modal-content-div img")[0].clientHeight + 70
                     $("#modal-content-div")[0].style.height = modContentH + "px"
                 } else {console.log("No Modal Image showing. || Source Function = window.onresize")}
+                
+            
+            //RESIZES BIGGER MODAL CONTENT DIV AND GIVES THEM MORE HEIGHT    
+            if(window.innerWidth < 1354){
+                $("#modal-content-div")[0].style.minWidth = 669 + "px"
+            }
+                
                 //reruns to resize
                 //modalData()
-                console.log("out")
-                allProducts.forEach(function(i){
+                //console.log("out")
+                allProducts.forEach(function(e, i){
                     var datasetSelector2 = ".product-div" + "-" +(i +1)
                     productDetailSpacing(datasetSelector2)
-                    console.log("in!")
+                    //console.log("in!")
+                    
                 })
                 
             }     
     
     })  //ENDOF: IMG CLICK FUNCTION
     
+    
+        unlockedWarning()
+        //ADDING: carrier warning to main product and REMOVED from MODAL
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\
+        function unlockedWarning(){
+            allProducts.forEach(function(p, i){
+                
+                if(p.specs[p.specs.length - 1] === undefined){}
+                else if(p.specs[p.specs.length - 1].search("Unlocked cell phones are compatible") > -1){
+                    console.log(i)
+                    var specText = p.specs[p.specs.length - 1]
+                    $("<p>").css({"position":"absolute","top":"140px","left":"205px"})
+                    .text(specText).addClass("modal-para-xsmall").appendTo(".product-div" + "-" +(i +1))
+                }
+                
+            })
+                
+        }
         
             
     
