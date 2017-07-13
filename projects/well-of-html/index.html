@@ -44,6 +44,7 @@
         <b><p>Question</p></b>
         <em><p>Which part of the day matters the most?</p></em>
         <i><p>Mines is the morning because fruit and water wake up my bones.</p></i>
+        <strong><p>STRONG HTML for STRONG FRUIT</p></strong>
         <hr>
     </div>
         
@@ -78,11 +79,13 @@
         <!-- STEP#1.5------------------------------------>
     <div id="form-div">
         <form>
-            Favorite Apple:<br>
+            <br>
+            <label for="Favorite Apple">Favorite Apple:</label>
             <input type="text" name="Favorite Apple" value="Red Apple">
             <br>
             
-            Time of day to eat Apple:<br>
+            <br>
+            <label for="Apple Time">Time of day to eat Apple:</label>
             <input type="text" name="Apple time" value="Morning">
             <br><br>
             <input type="submit" value="Submit">
@@ -92,26 +95,36 @@
         <!-- STEP#1.6------------------------------------>
     <div id="table-div">        
         <table id="myTable">
-        	<tr>
-              <th>Apple Type</th>
-              <th>Apple Freshness</th>
-              <th>Time to Eat</th>
-            </tr>
-            <tr>
-              <td>Red </td>
-              <td>Fresh</td>
-              <td>Morning</td>
-            </tr>
-            <tr>
-              <td>Green</td>
-              <td>Fresh</td>
-              <td>Afternoon</td>
-            </tr>
-            <tr>
-              <td>Red</td>
-              <td>Ripe</td>
-              <td>Evening</td>
-            </tr>
+            <thead>
+            	<tr>
+                  <th>Apple Type</th>
+                  <th>Apple Freshness</th>
+                  <th>Time to Eat</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td >APPLES, EVEN THE SCRAPS CAN BE PALPABLE...</td>
+                </tr>
+            </tfoot>
+            <tbody>
+                <tr>
+                  <td>Red </td>
+                  <td>Fresh</td>
+                  <td>Morning</td>
+                </tr>
+            
+                <tr>
+                  <td>Green</td>
+                  <td>Fresh</td>
+                  <td>Afternoon</td>
+                </tr>
+                <tr>
+                  <td>Red</td>
+                  <td>Ripe</td>
+                  <td>Evening</td>
+                </tr>
+            </tbody>
         </table>
         <hr>
     </div>
