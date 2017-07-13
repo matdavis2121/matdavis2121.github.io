@@ -37,6 +37,7 @@ $(document).ready(function() {
     
     //\\\\\\\\\\\\\\\\\
     allProducts.forEach(function(prod, i, arr ){
+    
     /*F-e1. MAJOR MISTAKE - WAS ASSIGNING QUERIED DIV INSTEAD OF NEWLY CREATED DIV!!*/
     
     /*F-A - CREATING div || elements for each product*/
@@ -70,6 +71,13 @@ $(document).ready(function() {
         //.append($("<hr>"))
         .appendTo("main")
         
+        //CREATED for products with low stock
+        if(prod.stock < 10){
+            var stockLow = "<span id='stock1'>ONLY <span id='stock2'>" + prod.stock + "</span><span id='stock1'> LEFT!</span>"
+            $(".product-div" + "-" +(i +1) + " p:last-child").html(function(){
+                return stockLow
+            })        
+        }
         
     /*F-B. ASSIGNING DATASet ATTRIBUTE*/
         var datasetSelector = ".product-div" + "-" +(i +1)
