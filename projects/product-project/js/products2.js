@@ -1,6 +1,6 @@
 /* global $, _ opspark */
 "use strict"
-/*import * as _ from 'lodash'*/
+import * as _ from 'lodash'
 
 $(document).ready(function() {
     $.getJSON('data/product.json', function (allProducts) {
