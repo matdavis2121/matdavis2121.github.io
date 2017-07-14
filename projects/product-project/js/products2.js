@@ -1,4 +1,5 @@
-/* global $ _ opspark */
+/* global $, _ opspark */
+import * as _ from 'lodash';
 "use strict"
 
 $(document).ready(function() {
