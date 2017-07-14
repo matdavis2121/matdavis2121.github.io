@@ -1,9 +1,13 @@
 /* global $, _ opspark */
-import * as _ from 'lodash';
 "use strict"
+/*import * as _ from 'lodash'*/
 
 $(document).ready(function() {
     $.getJSON('data/product.json', function (allProducts) {
+        $.getScript("lodash/dist/lodash.min.js", function(_){
+
+   
+
                                                             "ERROR LOG"
     /*------------1. MAJOR ERROR ON MY END WHEN CORRECTING DOUBLE ID#'S --- MADE IT INTO A NON NUMBER AND FORGOT QUOTES!*/
                     //CHANGED PHONE CASE ID FROM "5" TO "51"
@@ -1070,6 +1074,8 @@ $(document).ready(function() {
                                 // return pushy.join(" ")
    
   // ----------------ALL YOUR CODE GOES ABOVE HERE--------------- //
-}); //ENDOF: .JSON
-    }) //ENDOF: GET JSON
+    
+}); //ENDOF: getscript jquery           
+    }); //ENDOF: .JSON
+        }) //ENDOF: GET JSON
         //}) //ENDOF: Their 1st $function to start the js //2. REMOVED not necessary
