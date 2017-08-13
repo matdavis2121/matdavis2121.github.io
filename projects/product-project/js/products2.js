@@ -1,6 +1,7 @@
 /* global $, _ opspark */
 "use strict"
 /*import * as _ from 'lodash'*/
+/*BOWER_COMPONENTS ONLY USEFUL FOR SERVER SIDE PRODUCTION STATE, NOT CLIENT SIDE USE*/
 
 $(document).ready(function() {
     $.getJSON('data/product.json', function (allProducts) {
