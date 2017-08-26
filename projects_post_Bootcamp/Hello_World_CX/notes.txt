@@ -1,0 +1,9 @@
+"08/24/2017 00:34:14"
+
+BUILDING - PAST ENTRIES HTML USING - IndexedDB
+1. create simple function that makes list items of each past entry
+2. create JS function to populate past entries
+    a. figure out what and when to save an entry ( onkeydown )
+    b. create code to clear previous entries as well
+    c. create element to CLEAR each entry as well as all entries
+3. Build indexedDB code function to work with it all.

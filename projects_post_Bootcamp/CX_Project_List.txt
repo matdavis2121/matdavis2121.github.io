@@ -1,0 +1,68 @@
+**NOTES**
+1. Build a step by step procedure for the completion of medium articles
+    a. start in c9
+    b. run app in c9
+    c. confirm folder name, file names, syntax before download
+    d. automate unzipping process using winrar? etc.
+
+
+
+
+"08/13/2017 17:03:34"
+1. CX Project Name = mediumRARE
+    a. Make a CX to allow added customization to medium articles
+    b. Use ID's and Classnames (identify how consistent they are)
+    c. Create groups for each user
+        1a. Effects will be assigned per article and the article title will be the CONDITION
+        2a. Anything from color changes to style changes. Start small, go BIG.
+    d. Step by Step to show how everyone can have their own extension
+    e. Show a list of elements that have been customized and what has been customized
+    f. Look into using replace to find a LINE BREAK or RETURN CHARACTER in order to properly process and format copy/pasted text
+
+** I WANT: There to be one BASE EXTENSION that can accept (JS, HTML, CSS) like JSBIN
+        -This will allow for custom code to be drag and dropped vs. having each person need a separate extension
+        -I also have to test out in what ways will that code be accepted ( all together or one textarea for each language?)
+        -Build the code that takes that coppied code and makes it part of the running/persistent code
+
+
+*** ISSUE TRACKER:
+1. "08/13/2017 20:48:04"
+Ran into issue with json array of objects data returning undefined
+    How do I solve this in Chrome AND in general?
+
+
+
+
+"08/13/2017 17:44:07"
+2. CX Project Name = piggyBANK
+    a. A Chrome extension that allows for saving short, but detailed info on a problem you've solved.
+    b. You would be able to highlight text in order to copy it into a textarea in the CX popup or
+       you would copy and paste the answer yourself.
+    c. So you would have a title...you click that title and it will show--- 1. the ? you asked 2. the answer you found 3. the url you found it on.
+
+
+
+
+
+"08/13/2017 17:49:29"
+3. CX Project Name = Holy3 Quick Guide
+    a. This extension will show precise, yet simple and easy examples of common, basic Holy3 elements.
+    b. Big focus on the power of methods and properties for strings, arrays, numbers, etc.
+    c. Big focus on searching for particular topics, showing as many simple examples as possible
+    
+    
+    
+    
+    
+"08/14/2017 23:13:43"
+4. CX CODE GENERATOR UI --- Project Name = sLANG
+    a. UI to automate code creation like CREATING ELEMENTS
+    b. and much much more
+
+
+
+
+
+"08/21/2017 15:44:22"
+5. CX Project Name = sandGlass
+    a. Monitor what sites I visit and how long I stay on them
