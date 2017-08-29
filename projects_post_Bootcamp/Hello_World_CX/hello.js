@@ -11,15 +11,18 @@ console.groupCollapsed("Hello_World_CX")
 var versNum = 5
 
 createNewDB()
+add3InitialEntries()
 
+function er(){
+    var a = new Error; var b = a.stack; 
+    var start = b.indexOf(":", b.lastIndexOf("at")) + 1
+    return b.slice(start)
+}
 
 function lo(s1,s2,s3){
-    if(s2 === undefined){s2 = ""}
-    if(s3 === undefined){s3 = ""}
-    
-    
-    console.groupCollapsed()
-    console.trace(s1,s2 || "",s3 || "")
+    console.groupCollapsed("Log Line: " + er())
+    s2 = s2 || ""; s3 = s3 || ""
+    console.log("%c" + s1 + "   " + s2 + "   " + s3 , "color: #44e259")
     console.groupEnd()
 }
 
@@ -217,6 +220,32 @@ function getFirstEntry(){
     }
 //delete entries[entries.length - 1]    
 return entry
+}
+
+//3Ff. Add 3 initial entries if at least 3 don't already exists
+function add3InitialEntries(){
+    var open = window.indexedDB.open("Hello_World_CX")
+    var DB
+    var store
+    var sName = "KeydownEntries"
+    open.onsuccess =  function(e){DB = e.target.result
+    	
+    	if(DB.objectStoreNames.contains(sName)){
+    		store = DB.transaction([sName], "readwrite").objectStore("KeydownEntries")
+    		
+    		var entryTotal = store.count()
+    			entryTotal.onsuccess = function(e){
+    				var count = e.target.result
+    				if(count < 3){
+    				    console.log("%c" + count + " IndexedDB entries were found!","color:red")
+    					var o = {e1:"a BIG", e2:"MY", e3:"a beautiful"}
+    					var add = store.add(o,1)
+    					add.onsuccess = function(e){console.info(o)}
+    					add.onerror = function(){console.warn("LESS THAN 3 CHECK: 3 default entries were not added")}
+    				} else {console.log("%c" + count + " IndexedDB entries were found!","color:green")}
+    			}
+        } else {console.error("No objectStore for = " + sName)}
+    }
 }
 
 
