@@ -14,14 +14,21 @@
     100% { opacity: 0}
     }
     
+    @-webkit-keyframes allWorldsReset {
+    0% { opacity: 0}
+    100% { opacity: 1}
+    }
+    
     #world {
       /*animation-itertation-count: */
       /*-webkit-transition-timing-function: ease-out*/
     }
+    
+    input{width: 240px; padding: 5px; border-radius: 5px;}
   </style>
 </head>
   <body>
       <h2> Hello, it's <span id=world></span> World!</h2>
-      <input type="text" id="world-input" value=""/>
+      <input type="text" id="world-input" value="" placeholder="Name your world. Then press ENTER..."/>
   </body>
 </html>

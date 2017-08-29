@@ -66,3 +66,22 @@ Ran into issue with json array of objects data returning undefined
 "08/21/2017 15:44:22"
 5. CX Project Name = sandGlass
     a. Monitor what sites I visit and how long I stay on them
+    
+    
+    
+    
+    
+"Sat Aug 26 2017 19:47:35 GMT-0500 (Central Daylight Time)"
+6. BOX Chrome Extension for NOTES
+    a. Copy styles and Paste Styles
+
+
+
+
+
+
+"Sat Aug 26 2017 20:50:23 GMT-0500 (Central Daylight Time)"
+7. 4 PANE - IFRAME FB VIDEO OPTION
+7. 4 PANE - IFRAME FB VIDEO OPTION
+    a. how to turn up audio more??
+    b. audio normalizer?
